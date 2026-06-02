@@ -1,398 +1,360 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Fluxo de Caixa — Grupos ICC</title>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Fluxo de Caixa — ICC Grupo</title>
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
   <style>
-    :root {
-      --bg: #0f172a;
-      --bg2: #1e293b;
-      --bg3: #0f172a;
-      --border: #334155;
-      --tx: #f1f5f9;
-      --tx2: #94a3b8;
-      --instituto: #3b82f6;
-      --telecom: #10b981;
-      --medical: #f59e0b;
-      --red: #ef4444;
-      --green: #22c55e;
-      --purple: #a78bfa;
-    }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--bg); color: var(--tx); min-height: 100vh; }
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'Segoe UI',system-ui,sans-serif;background:#f0f4f8;color:#1a2942;min-height:100vh}
 
-    /* ── Header ── */
-    .header {
-      background: var(--bg2);
-      border-bottom: 1px solid var(--border);
-      padding: 14px 24px;
-      display: flex; align-items: center; justify-content: space-between;
+    /* ── HEADER ── */
+    .hdr{
+      background:linear-gradient(135deg,#0d2137 0%,#1a3a5c 100%);
+      color:#fff;padding:14px 28px;
+      display:flex;align-items:center;justify-content:space-between;
     }
-    .header-left h1 { font-size: 18px; font-weight: 700; }
-    .header-left p  { font-size: 12px; color: var(--tx2); margin-top: 2px; }
-    .header-right   { font-size: 12px; color: var(--tx2); text-align: right; }
+    .hdr-l h1{font-size:18px;font-weight:700;display:flex;align-items:center;gap:8px}
+    .hdr-l p{font-size:11px;color:#90aecb;margin-top:2px}
+    .hdr-r{text-align:right;font-size:11px;color:#90aecb}
+    .hdr-r strong{display:block;font-size:14px;font-weight:700;color:#fff;margin-top:2px}
 
-    /* ── Tabs ── */
-    .tabs {
-      background: var(--bg2); border-bottom: 1px solid var(--border);
-      display: flex; padding: 0 20px; gap: 2px; overflow-x: auto;
+    /* ── TABS ── */
+    .tabs{
+      background:#fff;border-bottom:2px solid #dde4ef;
+      display:flex;padding:0 24px;gap:0;overflow-x:auto;
+      box-shadow:0 1px 4px rgba(0,0,0,.06);
     }
-    .tab-btn {
-      padding: 11px 18px; border: none; background: transparent;
-      color: var(--tx2); font-size: 13px; font-weight: 500; cursor: pointer;
-      border-bottom: 2px solid transparent; white-space: nowrap; transition: all .15s;
+    .tab-btn{
+      padding:13px 20px;border:none;background:transparent;
+      color:#5a7186;font-size:13px;font-weight:500;cursor:pointer;
+      border-bottom:3px solid transparent;white-space:nowrap;
+      display:flex;align-items:center;gap:6px;transition:all .15s;
+      margin-bottom:-2px;
     }
-    .tab-btn:hover { color: var(--tx); }
-    .tab-btn.active.t-resumo    { color: var(--tx); border-bottom-color: var(--purple); }
-    .tab-btn.active.t-instituto { color: var(--tx); border-bottom-color: var(--instituto); }
-    .tab-btn.active.t-telecom   { color: var(--tx); border-bottom-color: var(--telecom); }
-    .tab-btn.active.t-medical   { color: var(--tx); border-bottom-color: var(--medical); }
+    .tab-btn:hover{color:#1a3a5c}
+    .tab-btn.active{color:#1a6fc4;border-bottom-color:#1a6fc4;font-weight:700}
+    .tab-icon{font-size:15px}
 
-    /* ── Layout ── */
-    .content { padding: 20px 24px; max-width: 1440px; margin: 0 auto; }
-    .tab-panel { display: none; }
-    .tab-panel.active { display: block; }
+    /* ── CONTENT ── */
+    .content{padding:22px 28px;max-width:1500px;margin:0 auto}
 
-    /* ── Filters ── */
-    .filters {
-      display: flex; align-items: center; gap: 10px; margin-bottom: 20px;
-      flex-wrap: wrap;
+    /* ── FILTERS BAR ── */
+    .fbar{
+      background:#fff;border-radius:10px;padding:12px 18px;
+      display:flex;align-items:center;gap:12px;flex-wrap:wrap;
+      box-shadow:0 1px 4px rgba(0,0,0,.06);border:1px solid #dde4ef;
+      margin-bottom:18px;
     }
-    .filters label { font-size: 12px; color: var(--tx2); }
-    .filter-input {
-      background: var(--bg2); border: 1px solid var(--border); border-radius: 6px;
-      padding: 5px 10px; color: var(--tx); font-size: 12px;
-      color-scheme: dark;
+    .fbar label{font-size:12px;color:#5a7186;font-weight:600}
+    .fi{
+      border:1px solid #c8d6e5;border-radius:6px;padding:5px 10px;
+      font-size:12px;color:#1a2942;background:#f8fafc;color-scheme:light;
     }
-    .btn {
-      background: #4f46e5; border: none; border-radius: 6px;
-      padding: 6px 14px; color: #fff; font-size: 12px; font-weight: 600;
-      cursor: pointer; transition: background .15s;
+    .btn-primary{
+      background:#1a6fc4;border:none;border-radius:6px;
+      padding:6px 16px;color:#fff;font-size:12px;font-weight:700;
+      cursor:pointer;display:flex;align-items:center;gap:5px;transition:background .15s;
     }
-    .btn:hover:not(:disabled) { background: #4338ca; }
-    .btn:disabled { background: #374151; cursor: not-allowed; }
-    .btn-outline {
-      background: transparent; border: 1px solid var(--border);
-      border-radius: 6px; padding: 5px 12px; color: var(--tx2);
-      font-size: 12px; cursor: pointer; transition: all .15s;
+    .btn-primary:hover:not(:disabled){background:#1558a0}
+    .btn-primary:disabled{background:#9db8d4;cursor:not-allowed}
+    .btn-sec{
+      background:#fff;border:1px solid #c8d6e5;border-radius:6px;
+      padding:5px 14px;color:#5a7186;font-size:12px;cursor:pointer;transition:all .15s;
     }
-    .btn-outline:hover { border-color: var(--tx2); color: var(--tx); }
+    .btn-sec:hover{border-color:#1a6fc4;color:#1a6fc4}
 
-    /* ── Cards ── */
-    .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 14px; margin-bottom: 20px; }
-    .card {
-      background: var(--bg2); border: 1px solid var(--border);
-      border-radius: 10px; padding: 16px 18px;
-    }
-    .card-lbl { font-size: 11px; color: var(--tx2); text-transform: uppercase; letter-spacing: .05em; margin-bottom: 6px; }
-    .card-val { font-size: 22px; font-weight: 700; }
-    .card-sub { font-size: 11px; color: var(--tx2); margin-top: 3px; }
-    .c-green { color: var(--green); }
-    .c-red   { color: var(--red); }
-    .c-blue  { color: var(--instituto); }
-    .c-em    { color: var(--telecom); }
-    .c-gold  { color: var(--medical); }
-    .c-purple{ color: var(--purple); }
+    /* ── PANELS ── */
+    .tab-panel{display:none}
+    .tab-panel.active{display:block}
 
-    /* ── Antecipação Card ── */
-    .antecard {
-      background: linear-gradient(135deg, #1e1b4b 0%, #1a1f3a 100%);
-      border: 1px solid #4338ca; border-radius: 12px;
-      padding: 20px 22px; margin-bottom: 20px;
+    /* ── SECTION BANNER ── */
+    .section-banner{
+      background:linear-gradient(135deg,#0d2137 0%,#1a3a5c 100%);
+      border-radius:10px;padding:22px 26px;margin-bottom:18px;color:#fff;
     }
-    .antecard-title {
-      font-size: 12px; font-weight: 700; color: #a5b4fc;
-      text-transform: uppercase; letter-spacing: .06em; margin-bottom: 14px;
-      display: flex; align-items: center; gap: 8px;
-    }
-    .antecard-title::before { content: '⚡'; font-size: 14px; }
-    .ante-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 14px; }
-    .ante-item { text-align: center; }
-    .ante-lbl { font-size: 11px; color: #a5b4fc; margin-bottom: 4px; }
-    .ante-val { font-size: 20px; font-weight: 700; color: #fbbf24; }
-    .ante-date { font-size: 10px; color: #7c3aed; margin-top: 2px; }
-    .ante-zero { font-size: 16px; font-weight: 700; color: var(--green); }
+    .section-banner h2{font-size:20px;font-weight:700;margin-bottom:4px}
+    .section-banner p{font-size:12px;color:#90aecb}
 
-    /* ── Chart ── */
-    .chart-wrap {
-      background: var(--bg2); border: 1px solid var(--border);
-      border-radius: 10px; padding: 16px 18px; margin-bottom: 20px;
+    /* ── KPI CARDS ── */
+    .kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-bottom:18px}
+    .kpi{
+      background:#fff;border-radius:10px;padding:18px 20px;
+      box-shadow:0 1px 4px rgba(0,0,0,.07);
+      border-top:3px solid #1a6fc4;
+      border-left:1px solid #dde4ef;border-right:1px solid #dde4ef;border-bottom:1px solid #dde4ef;
     }
-    .chart-title { font-size: 13px; font-weight: 600; margin-bottom: 12px; color: var(--tx2); }
-    .chart-canvas { position: relative; height: 260px; }
+    .kpi.danger{border-top-color:#e53e3e}
+    .kpi.warn  {border-top-color:#d69e2e}
+    .kpi.good  {border-top-color:#2f855a}
+    .kpi.purple{border-top-color:#6b46c1}
+    .kpi-lbl{font-size:11px;color:#5a7186;font-weight:600;text-transform:uppercase;letter-spacing:.04em;margin-bottom:8px}
+    .kpi-val{font-size:26px;font-weight:800;color:#1a2942;line-height:1}
+    .kpi-val.danger{color:#c53030}
+    .kpi-val.good{color:#276749}
+    .kpi-sub{font-size:11px;color:#718096;margin-top:5px}
+    .kpi-row{display:flex;gap:18px;margin-top:8px;padding-top:8px;border-top:1px solid #edf2f7}
+    .kpi-delta{font-size:10px;color:#718096;text-align:center}
+    .kpi-delta span{display:block;font-weight:700;font-size:11px}
+    .kpi-delta .up{color:#2f855a}
+    .kpi-delta .dn{color:#c53030}
 
-    /* ── Tables ── */
-    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 20px; }
-    @media (max-width: 800px) { .two-col { grid-template-columns: 1fr; } }
-    .tbl-wrap {
-      background: var(--bg2); border: 1px solid var(--border);
-      border-radius: 10px; overflow: hidden;
+    /* ── ANTECIPAÇÃO CARD ── */
+    .ante-card{
+      background:linear-gradient(135deg,#1a1756 0%,#2d3498 50%,#1a3a5c 100%);
+      border-radius:10px;padding:20px 24px;margin-bottom:18px;color:#fff;
+      box-shadow:0 4px 15px rgba(26,111,196,.25);
     }
-    .tbl-head {
-      padding: 12px 16px; border-bottom: 1px solid var(--border);
-      display: flex; justify-content: space-between; align-items: center;
+    .ante-card-title{
+      font-size:12px;font-weight:700;color:#a5b4fc;
+      text-transform:uppercase;letter-spacing:.06em;
+      margin-bottom:14px;display:flex;align-items:center;gap:8px;
     }
-    .tbl-head-title { font-size: 13px; font-weight: 600; }
-    .tbl-head-count { font-size: 11px; color: var(--tx2); }
-    .tbl-scroll { max-height: 360px; overflow-y: auto; overflow-x: auto; }
-    table { width: 100%; border-collapse: collapse; }
-    thead th {
-      background: var(--bg3); padding: 8px 12px;
-      text-align: left; font-size: 10px; font-weight: 700;
-      text-transform: uppercase; letter-spacing: .05em; color: var(--tx2);
-      position: sticky; top: 0; z-index: 1;
+    .ante-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:0}
+    .ante-item{
+      padding:0 20px;text-align:center;
+      border-right:1px solid rgba(255,255,255,.1);
     }
-    tbody tr { border-bottom: 1px solid var(--border); }
-    tbody tr:last-child { border-bottom: none; }
-    tbody tr:hover { background: rgba(255,255,255,.02); }
-    td { padding: 8px 12px; font-size: 12px; }
-    .badge {
-      display: inline-block; padding: 2px 7px; border-radius: 4px;
-      font-size: 10px; font-weight: 700;
-    }
-    .badge-aberto  { background: rgba(239,68,68,.12); color: #fca5a5; }
-    .badge-recebido{ background: rgba(34,197,94,.12); color: #86efac; }
-    .badge-pago    { background: rgba(34,197,94,.12); color: #86efac; }
-    .badge-vencido { background: rgba(245,158,11,.12); color: #fcd34d; }
+    .ante-item:first-child{padding-left:0}
+    .ante-item:last-child{border-right:none}
+    .ante-lbl{font-size:11px;color:#a5b4fc;margin-bottom:4px}
+    .ante-val{font-size:22px;font-weight:800;color:#fbbf24}
+    .ante-date{font-size:10px;color:#818cf8;margin-top:2px}
+    .ante-ok{font-size:18px;font-weight:700;color:#6ee7b7}
+    .ante-total{border-left:1px solid rgba(255,255,255,.2)!important;padding-left:24px!important}
 
-    /* ── Section header ── */
-    .sec-header { display: flex; align-items: center; gap: 10px; margin-bottom: 18px; }
-    .dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
-    .sec-title { font-size: 17px; font-weight: 700; }
+    /* ── CHARTS ── */
+    .chart-card{
+      background:#fff;border-radius:10px;padding:16px 18px;
+      box-shadow:0 1px 4px rgba(0,0,0,.07);border:1px solid #dde4ef;
+      margin-bottom:18px;
+    }
+    .chart-card-title{font-size:13px;font-weight:700;color:#2d3748;margin-bottom:14px;display:flex;align-items:center;gap:6px}
+    .chart-canvas{position:relative;height:270px}
 
-    /* ── Loading / Error ── */
-    .loading {
-      display: flex; flex-direction: column; align-items: center;
-      justify-content: center; padding: 50px 20px; color: var(--tx2);
+    /* ── TABLES ── */
+    .two-col{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:18px}
+    @media(max-width:900px){.two-col{grid-template-columns:1fr}}
+    .tbl-card{background:#fff;border-radius:10px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.07);border:1px solid #dde4ef}
+    .tbl-card-head{
+      padding:12px 16px;display:flex;justify-content:space-between;align-items:center;
+      border-bottom:1px solid #edf2f7;
     }
-    .spinner {
-      width: 36px; height: 36px; border: 3px solid var(--border);
-      border-top-color: #6366f1; border-radius: 50%;
-      animation: spin .7s linear infinite; margin-bottom: 12px;
+    .tbl-card-title{font-size:13px;font-weight:700}
+    .tbl-count{font-size:11px;color:#718096;background:#f7fafc;padding:2px 8px;border-radius:10px;border:1px solid #e2e8f0}
+    .tbl-scroll{max-height:350px;overflow-y:auto;overflow-x:auto}
+    table{width:100%;border-collapse:collapse}
+    thead th{
+      background:#f7fafc;padding:8px 12px;text-align:left;
+      font-size:10px;font-weight:700;text-transform:uppercase;
+      letter-spacing:.05em;color:#718096;position:sticky;top:0;z-index:1;
+      border-bottom:1px solid #e2e8f0;
     }
-    @keyframes spin { to { transform: rotate(360deg); } }
-    .err {
-      background: rgba(239,68,68,.08); border: 1px solid rgba(239,68,68,.3);
-      border-radius: 8px; padding: 14px 16px; color: #fca5a5;
-      font-size: 12px; margin: 12px 0; white-space: pre-wrap;
-    }
+    tbody tr{border-bottom:1px solid #f0f4f8;transition:background .1s}
+    tbody tr:hover{background:#f7fafc}
+    tbody tr:last-child{border-bottom:none}
+    td{padding:8px 12px;font-size:12px;color:#2d3748}
+    .badge{display:inline-block;padding:2px 8px;border-radius:4px;font-size:10px;font-weight:700;text-transform:uppercase}
+    .b-aberto {background:#fff5f5;color:#c53030;border:1px solid #fed7d7}
+    .b-recebido{background:#f0fff4;color:#276749;border:1px solid #c6f6d5}
+    .b-pago   {background:#f0fff4;color:#276749;border:1px solid #c6f6d5}
+    .b-vencido{background:#fffbeb;color:#92400e;border:1px solid #fde68a}
 
-    /* ── Resumo table ── */
-    .resumo-tbl-wrap {
-      background: var(--bg2); border: 1px solid var(--border);
-      border-radius: 10px; overflow: hidden; margin-bottom: 20px;
-    }
-    .company-row-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 6px; }
+    /* ── RESUMO TABLE ── */
+    .resumo-tbl-card{background:#fff;border-radius:10px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.07);border:1px solid #dde4ef;margin-bottom:18px}
+    .company-dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:6px;vertical-align:middle}
 
-    /* scrollbar */
-    ::-webkit-scrollbar { width: 5px; height: 5px; }
-    ::-webkit-scrollbar-track { background: transparent; }
-    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+    /* ── LOADING / ERROR ── */
+    .loading{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:60px 20px;color:#718096}
+    .spinner{width:36px;height:36px;border:3px solid #e2e8f0;border-top-color:#1a6fc4;border-radius:50%;animation:spin .7s linear infinite;margin-bottom:12px}
+    @keyframes spin{to{transform:rotate(360deg)}}
+    .loading p{font-size:13px}
+    .err-box{background:#fff5f5;border:1px solid #fed7d7;border-radius:8px;padding:14px 16px;color:#c53030;font-size:12px;margin:12px 0;white-space:pre-wrap}
+
+    /* SCROLLBAR */
+    ::-webkit-scrollbar{width:5px;height:5px}
+    ::-webkit-scrollbar-track{background:transparent}
+    ::-webkit-scrollbar-thumb{background:#c8d6e5;border-radius:4px}
   </style>
 </head>
 <body>
 
-<!-- ═══════════════ HEADER ═══════════════ -->
-<div class="header">
-  <div class="header-left">
-    <h1>Fluxo de Caixa — Grupos ICC</h1>
-    <p>Instituto · Telecom · Medical</p>
+<!-- ═══ HEADER ═══ -->
+<div class="hdr">
+  <div class="hdr-l">
+    <h1>📊 Fluxo de Caixa — ICC Grupo</h1>
+    <p>Gerado automaticamente via integração Omie API</p>
   </div>
-  <div class="header-right">
-    <div id="lastUpdate">Não carregado</div>
-    <div style="margin-top:3px; font-size:11px;">API: Omie ERP</div>
+  <div class="hdr-r">
+    Última atualização
+    <strong id="lastUpdate">—</strong>
   </div>
 </div>
 
-<!-- ═══════════════ TABS ═══════════════ -->
+<!-- ═══ TABS ═══ -->
 <div class="tabs">
-  <button class="tab-btn t-resumo active"    onclick="switchTab('resumo')">Resumo Executivo</button>
-  <button class="tab-btn t-instituto"         onclick="switchTab('instituto')">Instituto</button>
-  <button class="tab-btn t-telecom"           onclick="switchTab('telecom')">Telecom</button>
-  <button class="tab-btn t-medical"           onclick="switchTab('medical')">Medical</button>
+  <button class="tab-btn active t-resumo"    onclick="switchTab('resumo')">   <span class="tab-icon">📊</span> Consolidado</button>
+  <button class="tab-btn t-ante"             onclick="switchTab('ante')">    <span class="tab-icon">⚡</span> Antecipação</button>
+  <button class="tab-btn t-instituto"        onclick="switchTab('instituto')"><span class="tab-icon">🏛️</span> ICC Instituto</button>
+  <button class="tab-btn t-telecom"          onclick="switchTab('telecom')">  <span class="tab-icon">📡</span> ICC Telecom</button>
+  <button class="tab-btn t-medical"          onclick="switchTab('medical')">  <span class="tab-icon">🏥</span> ICC Medical</button>
 </div>
 
-<!-- ═══════════════ CONTENT ═══════════════ -->
+<!-- ═══ CONTENT ═══ -->
 <div class="content">
 
   <!-- Filters -->
-  <div class="filters">
-    <label>De:</label>
-    <input type="date" id="dateFrom" class="filter-input" />
-    <label>Até:</label>
-    <input type="date" id="dateTo"   class="filter-input" />
-    <button class="btn" id="btnLoad" onclick="loadAll()">Carregar Dados</button>
-    <button class="btn-outline" onclick="exportCSV()">Exportar CSV</button>
-    <span id="globalError"></span>
+  <div class="fbar">
+    <label>Período:</label>
+    <input type="date" id="dateFrom" class="fi"/>
+    <label>até</label>
+    <input type="date" id="dateTo"   class="fi"/>
+    <button class="btn-primary" id="btnLoad" onclick="loadAll()">🔄 Carregar Dados</button>
+    <button class="btn-sec" onclick="exportCSV()">⬇ Exportar CSV</button>
+    <div id="load-status" style="font-size:12px;color:#718096;margin-left:6px"></div>
   </div>
 
-  <!-- ──────── RESUMO EXECUTIVO ──────── -->
+  <!-- ──── CONSOLIDADO ──── -->
   <div id="tab-resumo" class="tab-panel active">
     <div id="resumo-loading" class="loading">
       <div class="spinner"></div>
-      <div>Clique em "Carregar Dados" para iniciar</div>
+      <p>Clique em "Carregar Dados" para iniciar</p>
     </div>
     <div id="resumo-content" style="display:none">
-
-      <!-- Antecipação Card -->
-      <div class="antecard">
-        <div class="antecard-title">Antecipação Necessária para Manter Caixa Positivo</div>
-        <div class="ante-grid" id="ante-grid"></div>
+      <div class="section-banner">
+        <h2>Resumo Executivo Consolidado — ICC Grupo</h2>
+        <p id="resumo-subtitle">Visão de Caixa Anual — 2026</p>
       </div>
-
-      <!-- KPIs consolidados -->
-      <div class="cards" id="resumo-cards"></div>
-
-      <!-- Chart consolidado -->
-      <div class="chart-wrap">
-        <div class="chart-title">Fluxo de Caixa Consolidado — Entradas vs Saídas (semanal)</div>
+      <div class="kpi-grid" id="resumo-kpis"></div>
+      <div class="chart-card">
+        <div class="chart-card-title">📈 Fluxo de Caixa Consolidado — Mensal 2026</div>
         <div class="chart-canvas"><canvas id="chartResumo"></canvas></div>
       </div>
-
-      <!-- Tabela por empresa -->
-      <div class="resumo-tbl-wrap">
-        <div class="tbl-head"><span class="tbl-head-title">Resumo por Empresa</span></div>
+      <div class="resumo-tbl-card">
+        <div class="tbl-card-head"><span class="tbl-card-title">Resumo por Empresa</span></div>
         <div class="tbl-scroll">
           <table>
-            <thead>
-              <tr>
-                <th>Empresa</th>
-                <th>A Receber (R$)</th>
-                <th>A Pagar (R$)</th>
-                <th>Saldo Projetado (R$)</th>
-                <th>Déficit Máximo (R$)</th>
-                <th>Antecipação Necessária (R$)</th>
-                <th>Data do Pior Momento</th>
-              </tr>
-            </thead>
+            <thead><tr>
+              <th>Empresa</th><th>Saldo Banco (R$)</th>
+              <th>A Receber (R$)</th><th>A Pagar (R$)</th>
+              <th>Saldo Projetado (R$)</th><th>Déficit Máx (R$)</th>
+              <th>Antecipação Necessária (R$)</th><th>Pior Data</th>
+            </tr></thead>
             <tbody id="resumo-tbody"></tbody>
           </table>
         </div>
       </div>
-
     </div>
   </div>
 
-  <!-- ──────── INSTITUTO ──────── -->
-  <div id="tab-instituto" class="tab-panel">
-    <div id="instituto-loading" class="loading" style="display:none">
-      <div class="spinner"></div><div>Carregando Instituto...</div>
+  <!-- ──── ANTECIPAÇÃO ──── -->
+  <div id="tab-ante" class="tab-panel">
+    <div id="ante-loading" class="loading" style="display:none">
+      <div class="spinner"></div><p>Calculando antecipações...</p>
     </div>
+    <div id="ante-content" style="display:none">
+      <div class="section-banner">
+        <h2>⚡ Antecipação de Recebíveis</h2>
+        <p>Valor mínimo a antecipar para manter caixa positivo em cada empresa</p>
+      </div>
+      <div class="ante-card" id="ante-card-main"></div>
+      <div class="chart-card">
+        <div class="chart-card-title">📉 Projeção de Saldo Acumulado — Com vs Sem Antecipação</div>
+        <div class="chart-canvas"><canvas id="chartAnte"></canvas></div>
+      </div>
+      <div class="kpi-grid" id="ante-detail"></div>
+    </div>
+  </div>
+
+  <!-- ──── INSTITUTO ──── -->
+  <div id="tab-instituto" class="tab-panel">
+    <div id="instituto-loading" class="loading" style="display:none"><div class="spinner"></div><p>Carregando Instituto...</p></div>
     <div id="instituto-err"></div>
     <div id="instituto-content" style="display:none">
-      <div class="sec-header">
-        <div class="dot" style="background:var(--instituto)"></div>
-        <span class="sec-title">Instituto</span>
+      <div class="section-banner" style="border-left:5px solid #3b82f6">
+        <h2>🏛️ ICC Instituto</h2>
+        <p id="instituto-period"></p>
       </div>
-      <div class="cards" id="instituto-cards"></div>
-      <div class="chart-wrap">
-        <div class="chart-title">Fluxo de Caixa — Instituto (semanal)</div>
+      <div class="kpi-grid" id="instituto-kpis"></div>
+      <div class="chart-card">
+        <div class="chart-card-title">📈 Fluxo de Caixa — Instituto (mensal)</div>
         <div class="chart-canvas"><canvas id="chartInstituto"></canvas></div>
       </div>
       <div class="two-col">
-        <div class="tbl-wrap">
-          <div class="tbl-head">
-            <span class="tbl-head-title" style="color:var(--green)">▲ Contas a Receber</span>
-            <span class="tbl-head-count" id="instituto-receber-count"></span>
+        <div class="tbl-card">
+          <div class="tbl-card-head">
+            <span class="tbl-card-title" style="color:#276749">▲ Contas a Receber</span>
+            <span class="tbl-count" id="instituto-rec-ct"></span>
           </div>
-          <div class="tbl-scroll">
-            <table><thead><tr><th>Vencimento</th><th>Cliente</th><th>Documento</th><th>Valor (R$)</th><th>Status</th></tr></thead>
-            <tbody id="instituto-receber-body"></tbody></table>
-          </div>
+          <div class="tbl-scroll"><table>
+            <thead><tr><th>Vencimento</th><th>Cliente</th><th>Documento</th><th style="text-align:right">Valor (R$)</th><th>Status</th></tr></thead>
+            <tbody id="instituto-rec-body"></tbody>
+          </table></div>
         </div>
-        <div class="tbl-wrap">
-          <div class="tbl-head">
-            <span class="tbl-head-title" style="color:var(--red)">▼ Contas a Pagar</span>
-            <span class="tbl-head-count" id="instituto-pagar-count"></span>
+        <div class="tbl-card">
+          <div class="tbl-card-head">
+            <span class="tbl-card-title" style="color:#c53030">▼ Contas a Pagar</span>
+            <span class="tbl-count" id="instituto-pag-ct"></span>
           </div>
-          <div class="tbl-scroll">
-            <table><thead><tr><th>Vencimento</th><th>Fornecedor</th><th>Documento</th><th>Valor (R$)</th><th>Status</th></tr></thead>
-            <tbody id="instituto-pagar-body"></tbody></table>
-          </div>
+          <div class="tbl-scroll"><table>
+            <thead><tr><th>Vencimento</th><th>Fornecedor</th><th>Documento</th><th style="text-align:right">Valor (R$)</th><th>Status</th></tr></thead>
+            <tbody id="instituto-pag-body"></tbody>
+          </table></div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- ──────── TELECOM ──────── -->
+  <!-- ──── TELECOM ──── -->
   <div id="tab-telecom" class="tab-panel">
-    <div id="telecom-loading" class="loading" style="display:none">
-      <div class="spinner"></div><div>Carregando Telecom...</div>
-    </div>
+    <div id="telecom-loading" class="loading" style="display:none"><div class="spinner"></div><p>Carregando Telecom...</p></div>
     <div id="telecom-err"></div>
     <div id="telecom-content" style="display:none">
-      <div class="sec-header">
-        <div class="dot" style="background:var(--telecom)"></div>
-        <span class="sec-title">Telecom</span>
+      <div class="section-banner" style="border-left:5px solid #10b981">
+        <h2>📡 ICC Telecom</h2>
+        <p id="telecom-period"></p>
       </div>
-      <div class="cards" id="telecom-cards"></div>
-      <div class="chart-wrap">
-        <div class="chart-title">Fluxo de Caixa — Telecom (semanal)</div>
+      <div class="kpi-grid" id="telecom-kpis"></div>
+      <div class="chart-card">
+        <div class="chart-card-title">📈 Fluxo de Caixa — Telecom (mensal)</div>
         <div class="chart-canvas"><canvas id="chartTelecom"></canvas></div>
       </div>
       <div class="two-col">
-        <div class="tbl-wrap">
-          <div class="tbl-head">
-            <span class="tbl-head-title" style="color:var(--green)">▲ Contas a Receber</span>
-            <span class="tbl-head-count" id="telecom-receber-count"></span>
-          </div>
-          <div class="tbl-scroll">
-            <table><thead><tr><th>Vencimento</th><th>Cliente</th><th>Documento</th><th>Valor (R$)</th><th>Status</th></tr></thead>
-            <tbody id="telecom-receber-body"></tbody></table>
-          </div>
+        <div class="tbl-card">
+          <div class="tbl-card-head"><span class="tbl-card-title" style="color:#276749">▲ Contas a Receber</span><span class="tbl-count" id="telecom-rec-ct"></span></div>
+          <div class="tbl-scroll"><table><thead><tr><th>Vencimento</th><th>Cliente</th><th>Documento</th><th style="text-align:right">Valor (R$)</th><th>Status</th></tr></thead><tbody id="telecom-rec-body"></tbody></table></div>
         </div>
-        <div class="tbl-wrap">
-          <div class="tbl-head">
-            <span class="tbl-head-title" style="color:var(--red)">▼ Contas a Pagar</span>
-            <span class="tbl-head-count" id="telecom-pagar-count"></span>
-          </div>
-          <div class="tbl-scroll">
-            <table><thead><tr><th>Vencimento</th><th>Fornecedor</th><th>Documento</th><th>Valor (R$)</th><th>Status</th></tr></thead>
-            <tbody id="telecom-pagar-body"></tbody></table>
-          </div>
+        <div class="tbl-card">
+          <div class="tbl-card-head"><span class="tbl-card-title" style="color:#c53030">▼ Contas a Pagar</span><span class="tbl-count" id="telecom-pag-ct"></span></div>
+          <div class="tbl-scroll"><table><thead><tr><th>Vencimento</th><th>Fornecedor</th><th>Documento</th><th style="text-align:right">Valor (R$)</th><th>Status</th></tr></thead><tbody id="telecom-pag-body"></tbody></table></div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- ──────── MEDICAL ──────── -->
+  <!-- ──── MEDICAL ──── -->
   <div id="tab-medical" class="tab-panel">
-    <div id="medical-loading" class="loading" style="display:none">
-      <div class="spinner"></div><div>Carregando Medical...</div>
-    </div>
+    <div id="medical-loading" class="loading" style="display:none"><div class="spinner"></div><p>Carregando Medical...</p></div>
     <div id="medical-err"></div>
     <div id="medical-content" style="display:none">
-      <div class="sec-header">
-        <div class="dot" style="background:var(--medical)"></div>
-        <span class="sec-title">Medical</span>
+      <div class="section-banner" style="border-left:5px solid #f59e0b">
+        <h2>🏥 ICC Medical</h2>
+        <p id="medical-period"></p>
       </div>
-      <div class="cards" id="medical-cards"></div>
-      <div class="chart-wrap">
-        <div class="chart-title">Fluxo de Caixa — Medical (semanal)</div>
+      <div class="kpi-grid" id="medical-kpis"></div>
+      <div class="chart-card">
+        <div class="chart-card-title">📈 Fluxo de Caixa — Medical (mensal)</div>
         <div class="chart-canvas"><canvas id="chartMedical"></canvas></div>
       </div>
       <div class="two-col">
-        <div class="tbl-wrap">
-          <div class="tbl-head">
-            <span class="tbl-head-title" style="color:var(--green)">▲ Contas a Receber</span>
-            <span class="tbl-head-count" id="medical-receber-count"></span>
-          </div>
-          <div class="tbl-scroll">
-            <table><thead><tr><th>Vencimento</th><th>Cliente</th><th>Documento</th><th>Valor (R$)</th><th>Status</th></tr></thead>
-            <tbody id="medical-receber-body"></tbody></table>
-          </div>
+        <div class="tbl-card">
+          <div class="tbl-card-head"><span class="tbl-card-title" style="color:#276749">▲ Contas a Receber</span><span class="tbl-count" id="medical-rec-ct"></span></div>
+          <div class="tbl-scroll"><table><thead><tr><th>Vencimento</th><th>Cliente</th><th>Documento</th><th style="text-align:right">Valor (R$)</th><th>Status</th></tr></thead><tbody id="medical-rec-body"></tbody></table></div>
         </div>
-        <div class="tbl-wrap">
-          <div class="tbl-head">
-            <span class="tbl-head-title" style="color:var(--red)">▼ Contas a Pagar</span>
-            <span class="tbl-head-count" id="medical-pagar-count"></span>
-          </div>
-          <div class="tbl-scroll">
-            <table><thead><tr><th>Vencimento</th><th>Fornecedor</th><th>Documento</th><th>Valor (R$)</th><th>Status</th></tr></thead>
-            <tbody id="medical-pagar-body"></tbody></table>
-          </div>
+        <div class="tbl-card">
+          <div class="tbl-card-head"><span class="tbl-card-title" style="color:#c53030">▼ Contas a Pagar</span><span class="tbl-count" id="medical-pag-ct"></span></div>
+          <div class="tbl-scroll"><table><thead><tr><th>Vencimento</th><th>Fornecedor</th><th>Documento</th><th style="text-align:right">Valor (R$)</th><th>Status</th></tr></thead><tbody id="medical-pag-body"></tbody></table></div>
         </div>
       </div>
     </div>
@@ -400,35 +362,31 @@
 
 </div><!-- /content -->
 
-<!-- ═══════════════ SCRIPT ═══════════════ -->
 <script>
 'use strict';
 
-// ─── Config ───
+// ── Config ──
 const COMPANIES = {
-  instituto: { name:'Instituto', key:'3946880386449', secret:'0c15f825cded97455749c7d6b7558f1e', color:'#3b82f6' },
-  telecom:   { name:'Telecom',   key:'4472437527558', secret:'eb030b4871537b1d984ff4078a469f75', color:'#10b981' },
-  medical:   { name:'Medical',   key:'7069173264153', secret:'9632f5b931f568b6b09accbf25f47496', color:'#f59e0b' },
+  instituto: { name:'ICC Instituto', key:'3946880386449', secret:'0c15f825cded97455749c7d6b7558f1e', color:'#3b82f6', accentClass:'b-azul' },
+  telecom:   { name:'ICC Telecom',   key:'4472437527558', secret:'eb030b4871537b1d984ff4078a469f75', color:'#10b981', accentClass:'b-verde' },
+  medical:   { name:'ICC Medical',   key:'7069173264153', secret:'9632f5b931f568b6b09accbf25f47496', color:'#f59e0b', accentClass:'b-amarelo' },
 };
 const OMIE = 'https://app.omie.com.br/api/v1/financas/';
-const charts = {};
+const OMIE_GERAL = 'https://app.omie.com.br/api/v1/geral/';
+const MONTHS_PT = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
+
+let charts = {};
 let allData = {};
-let allRows = []; // for CSV export
 
-// ─── Date utils ───
-function isoToOmie(s){ const[y,m,d]=s.split('-'); return `${d}/${m}/${y}`; }
-function omieToIso(s){ if(!s)return''; const[d,m,y]=s.split('/'); return `${y}-${m}-${d}`; }
-function omieToTs(s){  if(!s)return 0; const[d,m,y]=s.split('/'); return new Date(y,m-1,d).getTime(); }
-function fmtOmieDate(s){ if(!s)return'—'; const[d,m,y]=s.split('/'); return `${d}/${m}/${y}`; }
-function fmtCur(v){
-  return new Intl.NumberFormat('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2}).format(v||0);
-}
-function today(){ return new Date().toISOString().split('T')[0]; }
-function addDays(iso,n){
-  const d=new Date(iso); d.setDate(d.getDate()+n); return d.toISOString().split('T')[0];
-}
+// ── Utils ──
+const isoToOmie = s => { const[y,m,d]=s.split('-'); return `${d}/${m}/${y}`; };
+const omieToIso  = s => { if(!s)return''; const[d,m,y]=s.split('/'); return `${y}-${m}-${d}`; };
+const omieToTs   = s => { if(!s||!s.includes('/'))return 0; const[d,m,y]=s.split('/'); return new Date(+y,+m-1,+d).getTime(); };
+const fmtCur = v => new Intl.NumberFormat('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2}).format(v||0);
+const today  = () => new Date().toISOString().split('T')[0];
+const addDays= (iso,n) => { const d=new Date(iso+'T00:00:00'); d.setDate(d.getDate()+n); return d.toISOString().split('T')[0]; };
+const omieMonth = s => { if(!s||!s.includes('/'))return -1; const[,m]=s.split('/'); return +m-1; };
 
-// ─── Tab switching ───
 function switchTab(id){
   document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
@@ -436,24 +394,34 @@ function switchTab(id){
   document.querySelector('.tab-btn.t-'+id).classList.add('active');
 }
 
-// ─── API ───
-async function callOmie(key, secret, endpoint, call, params){
-  const resp = await fetch(OMIE+endpoint+'/', {
+// ── Omie API ──
+async function callOmie(base, key, secret, endpoint, call, params){
+  const url = base + endpoint + '/';
+  const body = { call, app_key:key, app_secret:secret, param:[{...params}] };
+  const resp = await fetch(url, {
     method:'POST',
     headers:{'Content-Type':'application/json'},
-    body: JSON.stringify({ call, app_key:key, app_secret:secret, param:[{...params}] })
+    body: JSON.stringify(body)
   });
-  if(!resp.ok) throw new Error(`HTTP ${resp.status}`);
+  if(!resp.ok) throw new Error(`HTTP ${resp.status} ao chamar ${call}`);
   const data = await resp.json();
-  if(data.faultstring) throw new Error(data.faultstring);
+  if(data.faultstring) throw new Error(`[${call}] ${data.faultstring}`);
   return data;
 }
 
-async function fetchAllPages(key, secret, endpoint, call, baseParams, listKey){
+async function fetchPages(key, secret, endpoint, call, baseParams, listKey){
   let items=[], page=1, totalPages=1;
   do {
-    const data = await callOmie(key, secret, endpoint, call, {...baseParams, pagina:page, registros_por_pagina:500});
-    const chunk = data[listKey] || [];
+    const data = await callOmie(OMIE, key, secret, endpoint, call,
+      {...baseParams, pagina:page, registros_por_pagina:500});
+    // Defensive: handle different response shapes
+    let chunk = data[listKey];
+    if(!chunk){
+      // Try to find the first array in the response
+      const arr = Object.values(data).find(v=>Array.isArray(v));
+      chunk = arr || [];
+      if(arr) console.warn(`[${call}] key '${listKey}' not found, used first array key`);
+    }
     items = items.concat(chunk);
     totalPages = data.total_de_paginas || 1;
     page++;
@@ -461,326 +429,422 @@ async function fetchAllPages(key, secret, endpoint, call, baseParams, listKey){
   return items;
 }
 
-// ─── Extract fields from Omie records ───
-function extractReceber(raw){
-  const c = raw.cabecalho || raw;
+// ── Bank balance via conta corrente ──
+async function fetchSaldoBanco(key, secret){
+  try {
+    const data = await callOmie(OMIE_GERAL, key, secret, 'contacorrente', 'ListarContasCorrentes', {
+      pagina:1, registros_por_pagina:50, apenas_importado_api:'N'
+    });
+    const contas = data.ListarContasCorrentes || data.conta_corrente_cadastro || data.cadastros || [];
+    const saldo = contas.reduce((s,c)=>{
+      const v = parseFloat(
+        c.saldo_atual ?? c.saldo ?? c.nSaldoAtual ??
+        (c.info_conta_corrente||{}).saldo_atual ?? 0
+      );
+      return s + (isNaN(v)?0:v);
+    },0);
+    console.log(`[saldo banco] ${contas.length} contas, total: R$${fmtCur(saldo)}`);
+    return saldo;
+  } catch(e){
+    console.warn('Não foi possível buscar saldo bancário:', e.message);
+    return 0;
+  }
+}
+
+// ── Extract record fields ──
+function exRec(raw){
+  const c  = raw.cabecalho || raw;
   const st = raw.status_titulo;
-  const cl = (raw.clientes_documento||{});
-  const venc = c.data_vencimento || raw.data_vencimento || '';
-  const valor = parseFloat(c.valor_documento ?? raw.valor_documento ?? 0);
-  const saldo = parseFloat(c.valor_saldo ?? raw.valor_saldo ?? valor);
-  const status = (typeof st==='object') ? (st.codigo_status||'ABERTO') : (st||'ABERTO');
-  const cliente = cl.nome_fantasia || c.nome_cliente || raw.nome_fantasia || raw.razao_social || '—';
-  const doc = c.numero_documento || raw.numero_documento || c.codigo_lancamento_omie || '—';
-  return { venc, valor, saldo, status, nome: cliente, doc };
+  const cl = raw.clientes_documento || raw.det_recebimento || {};
+  return {
+    venc:    c.data_vencimento  || raw.data_vencimento  || '',
+    valor:   parseFloat(c.valor_documento  ?? raw.valor_documento  ?? 0),
+    saldo:   parseFloat(c.valor_saldo      ?? raw.valor_saldo      ?? c.valor_documento ?? raw.valor_documento ?? 0),
+    status:  typeof st==='object' ? (st.codigo_status||'ABERTO') : (st||'ABERTO'),
+    nome:    cl.nome_fantasia || c.nome_cliente || raw.nome_fantasia || raw.razao_social || '—',
+    doc:     c.numero_documento || raw.numero_documento || String(c.codigo_lancamento_omie||raw.codigo_lancamento_omie||'—'),
+  };
 }
-
-function extractPagar(raw){
-  const c = raw.cabecalho || raw;
+function exPag(raw){
+  const c  = raw.cabecalho || raw;
   const st = raw.status_titulo;
-  const fn = (raw.fornecedor_documento||{});
-  const venc = c.data_vencimento || raw.data_vencimento || '';
-  const valor = parseFloat(c.valor_documento ?? raw.valor_documento ?? 0);
-  const saldo = parseFloat(c.valor_saldo ?? raw.valor_saldo ?? valor);
-  const status = (typeof st==='object') ? (st.codigo_status||'ABERTO') : (st||'ABERTO');
-  const fornecedor = fn.nome_fantasia || c.nome_fornecedor || raw.nome_fantasia || raw.razao_social || '—';
-  const doc = c.numero_documento || raw.numero_documento || c.codigo_lancamento_omie || '—';
-  return { venc, valor, saldo, status, nome: fornecedor, doc };
+  const fn = raw.fornecedor_documento || {};
+  return {
+    venc:   c.data_vencimento  || raw.data_vencimento  || '',
+    valor:  parseFloat(c.valor_documento  ?? raw.valor_documento  ?? 0),
+    saldo:  parseFloat(c.valor_saldo      ?? raw.valor_saldo      ?? c.valor_documento ?? raw.valor_documento ?? 0),
+    status: typeof st==='object' ? (st.codigo_status||'ABERTO') : (st||'ABERTO'),
+    nome:   fn.nome_fantasia || c.nome_fornecedor || raw.nome_fantasia || raw.razao_social || '—',
+    doc:    c.numero_documento || raw.numero_documento || String(c.codigo_lancamento_omie||raw.codigo_lancamento_omie||'—'),
+  };
 }
 
-// ─── Cash-flow analysis ───
-function buildDailyFlow(receber, pagar){
-  const map = {};
-  const ensure = d => { if(!map[d]) map[d]={receber:0,pagar:0}; };
-  receber.forEach(r=>{ if(r.venc){ ensure(r.venc); map[r.venc].receber+=r.saldo; } });
-  pagar.forEach(p=>{ if(p.venc){ ensure(p.venc); map[p.venc].pagar+=p.saldo; } });
-  return Object.entries(map)
-    .map(([d,v])=>({date:d,...v}))
-    .sort((a,b)=>omieToTs(a.date)-omieToTs(b.date));
+// ── Monthly aggregation ──
+function byMonth(receber, pagar){
+  const m = Array.from({length:12},(_,i)=>({month:i,receber:0,pagar:0}));
+  receber.forEach(r=>{ const mo=omieMonth(r.venc); if(mo>=0) m[mo].receber+=r.saldo; });
+  pagar.forEach(p=>  { const mo=omieMonth(p.venc); if(mo>=0) m[mo].pagar  +=p.saldo; });
+  return m;
 }
 
-function calcAntecipacao(dailyFlow){
-  let run=0, min=0, minDate='';
-  dailyFlow.forEach(d=>{
-    run += d.receber - d.pagar;
-    if(run < min){ min=run; minDate=d.date; }
+// ── Running balance + antecipação calculation ──
+function calcAnte(monthly, startBalance){
+  let run = startBalance||0, min=run, minMon=-1;
+  const running = monthly.map((m,i)=>{
+    run += m.receber - m.pagar;
+    if(run<min){ min=run; minMon=i; }
+    return run;
   });
-  return { needed: min<0 ? Math.abs(min) : 0, date: minDate, minBalance: min };
+  const needed = min<0 ? Math.abs(min) : 0;
+  return { needed, minMon, minBalance:min, running };
 }
 
-// weekly grouping for chart
-function groupByWeek(dailyFlow){
-  const wks={};
-  dailyFlow.forEach(d=>{
-    const dt = new Date(omieToIso(d.date)+'T00:00:00');
-    const mon = new Date(dt); mon.setDate(dt.getDate()-(dt.getDay()||7)+1);
-    const key = mon.toISOString().split('T')[0];
-    if(!wks[key]) wks[key]={date:key,receber:0,pagar:0};
-    wks[key].receber += d.receber;
-    wks[key].pagar   += d.pagar;
-  });
-  return Object.values(wks).sort((a,b)=>a.date.localeCompare(b.date));
-}
-
-function buildRunning(weekly){
-  let run=0;
-  return weekly.map(w=>{ run+=w.receber-w.pagar; return run; });
-}
-
-function fmtWeekLabel(iso){
-  const[y,m,d]=iso.split('-'); return `${d}/${m}`;
-}
-
-// ─── Chart rendering ───
-function renderChart(canvasId, weekly, color){
-  if(charts[canvasId]) charts[canvasId].destroy();
-  const labels = weekly.map(w=>fmtWeekLabel(w.date));
-  const running = buildRunning(weekly);
-  const ctx = document.getElementById(canvasId).getContext('2d');
-  charts[canvasId] = new Chart(ctx,{
+// ── Chart ──
+function renderChart(id, monthly, color, startBalance){
+  if(charts[id]) charts[id].destroy();
+  const { running } = calcAnte(monthly, startBalance);
+  const withAnte = (() => {
+    const ante = calcAnte(monthly, startBalance).needed;
+    let r2 = (startBalance||0)+ante;
+    return monthly.map(m=>{ r2+=m.receber-m.pagar; return r2; });
+  })();
+  const ctx = document.getElementById(id).getContext('2d');
+  charts[id] = new Chart(ctx,{
     data:{
-      labels,
+      labels: MONTHS_PT,
       datasets:[
-        { type:'bar', label:'A Receber', data:weekly.map(w=>w.receber),
-          backgroundColor:'rgba(34,197,94,.55)', borderColor:'rgba(34,197,94,.9)', borderWidth:1 },
-        { type:'bar', label:'A Pagar', data:weekly.map(w=>-w.pagar),
-          backgroundColor:'rgba(239,68,68,.5)', borderColor:'rgba(239,68,68,.85)', borderWidth:1 },
-        { type:'line', label:'Saldo Acum.', data:running,
-          borderColor: color||'#a78bfa', backgroundColor:'transparent',
-          borderWidth:2, pointRadius:2, tension:.3, yAxisID:'y2' },
+        { type:'bar', label:'Entradas', data:monthly.map(m=>m.receber),
+          backgroundColor:'rgba(39,103,73,.65)', borderColor:'#2f855a', borderWidth:1 },
+        { type:'bar', label:'Saídas', data:monthly.map(m=>-m.pagar),
+          backgroundColor:'rgba(197,48,48,.55)', borderColor:'#c53030', borderWidth:1 },
+        { type:'line', label:'Saldo Acumulado', data:running,
+          borderColor:color||'#1a6fc4', backgroundColor:'transparent',
+          borderWidth:2.5, pointRadius:3, tension:.3, yAxisID:'y2' },
+        { type:'line', label:'Com Antecipação', data:withAnte,
+          borderColor:'#d69e2e', backgroundColor:'transparent',
+          borderWidth:1.5, borderDash:[5,4], pointRadius:0, tension:.3, yAxisID:'y2' },
       ]
     },
     options:{
       responsive:true, maintainAspectRatio:false,
-      interaction:{ mode:'index', intersect:false },
+      interaction:{mode:'index',intersect:false},
       plugins:{
-        legend:{ labels:{ color:'#94a3b8', font:{size:11} } },
-        tooltip:{
-          callbacks:{
-            label(ctx){
-              const v=ctx.parsed.y;
-              return ` ${ctx.dataset.label}: R$ ${fmtCur(Math.abs(v))}`;
-            }
-          }
-        }
+        legend:{labels:{color:'#4a5568',font:{size:11}}},
+        tooltip:{callbacks:{label(c){
+          return ` ${c.dataset.label}: R$ ${fmtCur(Math.abs(c.parsed.y))}`;
+        }}}
       },
       scales:{
-        x:{ ticks:{color:'#64748b',font:{size:10}}, grid:{color:'#1e293b'} },
-        y:{ ticks:{color:'#64748b',font:{size:10},callback:v=>`R$${fmtCur(v)}`},
-            grid:{color:'rgba(51,65,85,.4)'} },
-        y2:{ position:'right', ticks:{color:'#a78bfa',font:{size:10},callback:v=>`R$${fmtCur(v)}`},
-             grid:{drawOnChartArea:false} }
+        x:{ticks:{color:'#718096',font:{size:11}},grid:{color:'#f0f4f8'}},
+        y:{ticks:{color:'#718096',font:{size:10},callback:v=>'R$'+fmtCur(v)},grid:{color:'rgba(224,231,239,.6)'}},
+        y2:{position:'right',ticks:{color:color||'#1a6fc4',font:{size:10},callback:v=>'R$'+fmtCur(v)},grid:{drawOnChartArea:false}}
       }
     }
   });
 }
 
-// ─── Render company tab ───
-function renderCompany(id, receber, pagar){
+// ── Populate tables ──
+function fillTable(bodyId, ctId, rows, tipo){
+  const now = Date.now();
+  const sorted = [...rows].sort((a,b)=>omieToTs(a.venc)-omieToTs(b.venc));
+  if(ctId) document.getElementById(ctId).textContent = rows.length+' registros';
+  document.getElementById(bodyId).innerHTML = sorted.length ? sorted.map(r=>{
+    let sc = r.status.toLowerCase();
+    if(sc==='aberto' && omieToTs(r.venc)<now) sc='vencido';
+    return `<tr>
+      <td style="white-space:nowrap">${r.venc||'—'}</td>
+      <td style="max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="${r.nome}">${r.nome}</td>
+      <td style="color:#718096;font-size:11px">${r.doc}</td>
+      <td style="text-align:right;font-variant-numeric:tabular-nums;font-weight:600">R$ ${fmtCur(r.saldo)}</td>
+      <td><span class="badge b-${sc}">${sc.toUpperCase()}</span></td>
+    </tr>`;
+  }).join('')
+  : `<tr><td colspan="5" style="text-align:center;padding:24px;color:#718096">Nenhum registro no período</td></tr>`;
+}
+
+// ── Render company ──
+function renderCompany(id, receber, pagar, saldoBanco){
   const c = COMPANIES[id];
-  const daily = buildDailyFlow(receber, pagar);
-  const weekly = groupByWeek(daily);
-  const ante = calcAntecipacao(daily);
+  const monthly = byMonth(receber, pagar);
+  const ante = calcAnte(monthly, saldoBanco);
   const totRec = receber.reduce((s,r)=>s+r.saldo,0);
   const totPag = pagar.reduce((s,p)=>s+p.saldo,0);
-  const saldo = totRec - totPag;
+  const saldoProj = saldoBanco + totRec - totPag;
 
-  // Cards
-  document.getElementById(id+'-cards').innerHTML = `
-    <div class="card"><div class="card-lbl">A Receber</div>
-      <div class="card-val c-green">R$ ${fmtCur(totRec)}</div>
-      <div class="card-sub">${receber.length} títulos</div></div>
-    <div class="card"><div class="card-lbl">A Pagar</div>
-      <div class="card-val c-red">R$ ${fmtCur(totPag)}</div>
-      <div class="card-sub">${pagar.length} títulos</div></div>
-    <div class="card"><div class="card-lbl">Saldo Projetado</div>
-      <div class="card-val ${saldo>=0?'c-green':'c-red'}">R$ ${fmtCur(saldo)}</div>
-      <div class="card-sub">Receber − Pagar</div></div>
-    <div class="card"><div class="card-lbl">Antecipação Necessária</div>
-      <div class="card-val" style="color:#fbbf24; font-size:18px">${ante.needed>0?'R$ '+fmtCur(ante.needed):'Não necessária'}</div>
-      <div class="card-sub">${ante.needed>0?'Déficit em '+fmtOmieDate(ante.date):'Caixa sempre positivo'}</div></div>
+  // KPIs
+  document.getElementById(id+'-kpis').innerHTML = `
+    <div class="kpi good">
+      <div class="kpi-lbl">Saldo Banco Atual</div>
+      <div class="kpi-val good">R$ ${fmtCur(saldoBanco)}</div>
+      <div class="kpi-sub">Contas correntes Omie</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-lbl">Total a Receber (ano)</div>
+      <div class="kpi-val" style="color:#276749">R$ ${fmtCur(totRec)}</div>
+      <div class="kpi-sub">${receber.length} títulos em aberto</div>
+    </div>
+    <div class="kpi danger">
+      <div class="kpi-lbl">Total a Pagar (ano)</div>
+      <div class="kpi-val danger">R$ ${fmtCur(totPag)}</div>
+      <div class="kpi-sub">${pagar.length} títulos em aberto</div>
+    </div>
+    <div class="kpi ${saldoProj>=0?'good':'danger'}">
+      <div class="kpi-lbl">Saldo Projetado Final</div>
+      <div class="kpi-val ${saldoProj>=0?'good':'danger'}">R$ ${fmtCur(saldoProj)}</div>
+      <div class="kpi-sub">Banco + Receber − Pagar</div>
+    </div>
+    <div class="kpi purple">
+      <div class="kpi-lbl">Antecipação Necessária</div>
+      <div class="kpi-val" style="color:${ante.needed>0?'#6b46c1':'#276749'}">
+        ${ante.needed>0?'R$ '+fmtCur(ante.needed):'Não necessária'}
+      </div>
+      <div class="kpi-sub">${ante.needed>0?'Déficit em '+MONTHS_PT[ante.minMon]+'/26':'Caixa sempre positivo'}</div>
+    </div>
   `;
 
-  // Chart
-  renderChart('chart'+id.charAt(0).toUpperCase()+id.slice(1), weekly, c.color);
+  document.getElementById(id+'-period').textContent =
+    `Jan/2026 a Dez/2026 · Saldo banco: R$ ${fmtCur(saldoBanco)}`;
 
-  // Tables
-  const makeRow = (item, tipo) => {
-    const today_ts = Date.now();
-    const venc_ts = omieToTs(item.venc);
-    let badge = item.status.toLowerCase();
-    if(badge==='aberto' && venc_ts < today_ts) badge='vencido';
-    return `<tr>
-      <td>${fmtOmieDate(item.venc)}</td>
-      <td style="max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="${item.nome}">${item.nome}</td>
-      <td style="color:var(--tx2);font-size:11px">${item.doc}</td>
-      <td style="text-align:right;font-variant-numeric:tabular-nums">R$ ${fmtCur(item.saldo)}</td>
-      <td><span class="badge badge-${badge}">${badge.toUpperCase()}</span></td>
-    </tr>`;
-  };
-
-  const sortedRec = [...receber].sort((a,b)=>omieToTs(a.venc)-omieToTs(b.venc));
-  const sortedPag = [...pagar].sort((a,b)=>omieToTs(a.venc)-omieToTs(b.venc));
-
-  document.getElementById(id+'-receber-body').innerHTML = sortedRec.map(r=>makeRow(r,'receber')).join('') || '<tr><td colspan="5" style="color:var(--tx2);text-align:center;padding:20px">Nenhum registro</td></tr>';
-  document.getElementById(id+'-pagar-body').innerHTML   = sortedPag.map(p=>makeRow(p,'pagar')).join('')   || '<tr><td colspan="5" style="color:var(--tx2);text-align:center;padding:20px">Nenhum registro</td></tr>';
-  document.getElementById(id+'-receber-count').textContent = receber.length+' registros';
-  document.getElementById(id+'-pagar-count').textContent   = pagar.length+' registros';
+  renderChart('chart'+id.charAt(0).toUpperCase()+id.slice(1), monthly, c.color, saldoBanco);
+  fillTable(id+'-rec-body', id+'-rec-ct', receber, 'receber');
+  fillTable(id+'-pag-body', id+'-pag-ct', pagar,   'pagar');
 
   document.getElementById(id+'-loading').style.display='none';
   document.getElementById(id+'-content').style.display='block';
 
-  return { totRec, totPag, saldo, ante, receber, pagar, weekly, daily };
+  return { totRec, totPag, saldoBanco, saldoProj, ante, monthly };
 }
 
-// ─── Render Resumo Executivo ───
+// ── Render Resumo ──
 function renderResumo(){
   const ids = Object.keys(COMPANIES);
-  let totalRec=0, totalPag=0;
-  const anteItems = [];
-  const tbodyRows = [];
+  let totRec=0, totPag=0, totBanco=0, totAnte=0;
+  const rows=[], mergedMonthly = Array.from({length:12},(_,i)=>({month:i,receber:0,pagar:0}));
 
-  // Merge weekly for consolidated chart
-  const mergedWeekly = {};
   ids.forEach(id=>{
     if(!allData[id]) return;
-    const {totRec, totPag, saldo, ante, weekly} = allData[id];
-    totalRec += totRec; totalPag += totPag;
-    anteItems.push({id, name:COMPANIES[id].name, ante, color:COMPANIES[id].color});
-    weekly.forEach(w=>{
-      if(!mergedWeekly[w.date]) mergedWeekly[w.date]={date:w.date,receber:0,pagar:0};
-      mergedWeekly[w.date].receber+=w.receber;
-      mergedWeekly[w.date].pagar+=w.pagar;
-    });
-    tbodyRows.push({id, name:COMPANIES[id].name, color:COMPANIES[id].color, totRec, totPag, saldo, ante});
+    const d = allData[id];
+    totRec  += d.totRec;
+    totPag  += d.totPag;
+    totBanco+= d.saldoBanco;
+    totAnte += d.ante.needed;
+    d.monthly.forEach((m,i)=>{ mergedMonthly[i].receber+=m.receber; mergedMonthly[i].pagar+=m.pagar; });
+    rows.push(d);
   });
 
-  const totalSaldo = totalRec - totalPag;
-  const totalAnte  = anteItems.reduce((s,a)=>s+a.ante.needed,0);
+  const totProj = totBanco + totRec - totPag;
 
-  // KPI cards
-  document.getElementById('resumo-cards').innerHTML = `
-    <div class="card"><div class="card-lbl">Total a Receber</div>
-      <div class="card-val c-green">R$ ${fmtCur(totalRec)}</div>
-      <div class="card-sub">3 empresas consolidado</div></div>
-    <div class="card"><div class="card-lbl">Total a Pagar</div>
-      <div class="card-val c-red">R$ ${fmtCur(totalPag)}</div>
-      <div class="card-sub">3 empresas consolidado</div></div>
-    <div class="card"><div class="card-lbl">Saldo Projetado Consolidado</div>
-      <div class="card-val ${totalSaldo>=0?'c-green':'c-red'}">R$ ${fmtCur(totalSaldo)}</div>
-      <div class="card-sub">Receber − Pagar</div></div>
-    <div class="card"><div class="card-lbl">Total Antecipação</div>
-      <div class="card-val" style="color:#fbbf24">R$ ${fmtCur(totalAnte)}</div>
-      <div class="card-sub">Para manter caixa positivo</div></div>
-  `;
-
-  // Antecipação grid
-  const anteHtml = anteItems.map(a=>`
-    <div class="ante-item">
-      <div class="ante-lbl" style="color:${a.color}">${a.name}</div>
-      ${a.ante.needed>0
-        ? `<div class="ante-val">R$ ${fmtCur(a.ante.needed)}</div>
-           <div class="ante-date">Déficit em ${fmtOmieDate(a.ante.date)}</div>`
-        : `<div class="ante-zero">Não necessária</div>`
-      }
+  document.getElementById('resumo-kpis').innerHTML = `
+    <div class="kpi good">
+      <div class="kpi-lbl">Saldo Banco Consolidado</div>
+      <div class="kpi-val good">R$ ${fmtCur(totBanco)}</div>
+      <div class="kpi-sub">3 empresas somadas</div>
     </div>
-  `).join('');
-  const totalAnteHtml = `
-    <div class="ante-item" style="border-left:1px solid #4338ca; padding-left:16px">
-      <div class="ante-lbl" style="color:#c4b5fd">TOTAL CONSOLIDADO</div>
-      ${totalAnte>0
-        ? `<div class="ante-val" style="font-size:24px">R$ ${fmtCur(totalAnte)}</div>`
-        : `<div class="ante-zero" style="font-size:20px">Caixa Saudável</div>`
-      }
-      <div class="ante-date" style="color:#7c3aed">Soma dos déficits individuais</div>
+    <div class="kpi">
+      <div class="kpi-lbl">Total a Receber</div>
+      <div class="kpi-val" style="color:#276749">R$ ${fmtCur(totRec)}</div>
+      <div class="kpi-sub">Jan–Dez 2026</div>
+    </div>
+    <div class="kpi danger">
+      <div class="kpi-lbl">Total a Pagar</div>
+      <div class="kpi-val danger">R$ ${fmtCur(totPag)}</div>
+      <div class="kpi-sub">Jan–Dez 2026</div>
+    </div>
+    <div class="kpi ${totProj>=0?'good':'danger'}">
+      <div class="kpi-lbl">Saldo Projetado Final</div>
+      <div class="kpi-val ${totProj>=0?'good':'danger'}">R$ ${fmtCur(totProj)}</div>
+      <div class="kpi-sub">Banco + Receber − Pagar</div>
+    </div>
+    <div class="kpi purple">
+      <div class="kpi-lbl">Antecipação Total</div>
+      <div class="kpi-val" style="color:${totAnte>0?'#6b46c1':'#276749'}">
+        ${totAnte>0?'R$ '+fmtCur(totAnte):'Não necessária'}
+      </div>
+      <div class="kpi-sub">Para manter caixa positivo</div>
     </div>
   `;
-  document.getElementById('ante-grid').innerHTML = anteHtml + totalAnteHtml;
 
-  // Summary table
-  document.getElementById('resumo-tbody').innerHTML = tbodyRows.map(r=>`
-    <tr>
-      <td><span class="company-row-dot" style="background:${r.color}"></span>${r.name}</td>
-      <td style="color:var(--green);text-align:right">R$ ${fmtCur(r.totRec)}</td>
-      <td style="color:var(--red);text-align:right">R$ ${fmtCur(r.totPag)}</td>
-      <td style="color:${r.saldo>=0?'var(--green)':'var(--red)'};text-align:right">R$ ${fmtCur(r.saldo)}</td>
-      <td style="color:${r.ante.minBalance<0?'#fcd34d':'var(--green)'};text-align:right">
-        ${r.ante.minBalance<0?'R$ '+fmtCur(r.ante.needed):'—'}</td>
-      <td style="color:#fbbf24;text-align:right">
-        ${r.ante.needed>0?'R$ '+fmtCur(r.ante.needed):'<span style="color:var(--green)">—</span>'}</td>
-      <td style="color:var(--tx2)">${r.ante.needed>0?fmtOmieDate(r.ante.date):'—'}</td>
-    </tr>
-  `).join('');
+  document.getElementById('resumo-subtitle').textContent =
+    `Fluxo de Caixa Anual 2026 · Saldo banco consolidado: R$ ${fmtCur(totBanco)}`;
 
-  // Consolidated chart
-  const mwArr = Object.values(mergedWeekly).sort((a,b)=>a.date.localeCompare(b.date));
-  renderChart('chartResumo', mwArr, '#a78bfa');
+  renderChart('chartResumo', mergedMonthly, '#1a6fc4', totBanco);
+
+  document.getElementById('resumo-tbody').innerHTML = ids.map(id=>{
+    if(!allData[id]) return '';
+    const d=allData[id]; const c=COMPANIES[id];
+    return `<tr>
+      <td><span class="company-dot" style="background:${c.color}"></span>${c.name}</td>
+      <td style="text-align:right;color:#276749;font-weight:600">R$ ${fmtCur(d.saldoBanco)}</td>
+      <td style="text-align:right;color:#276749">R$ ${fmtCur(d.totRec)}</td>
+      <td style="text-align:right;color:#c53030">R$ ${fmtCur(d.totPag)}</td>
+      <td style="text-align:right;font-weight:700;color:${d.saldoProj>=0?'#276749':'#c53030'}">R$ ${fmtCur(d.saldoProj)}</td>
+      <td style="text-align:right;color:${d.ante.minBalance<0?'#c53030':'#718096'}">
+        ${d.ante.minBalance<0?'R$ '+fmtCur(Math.abs(d.ante.minBalance)):'—'}</td>
+      <td style="text-align:right;color:${d.ante.needed>0?'#6b46c1':'#276749'};font-weight:700">
+        ${d.ante.needed>0?'R$ '+fmtCur(d.ante.needed):'<span style="color:#276749">—</span>'}</td>
+      <td style="color:#718096">${d.ante.needed>0?MONTHS_PT[d.ante.minMon]+'/2026':'—'}</td>
+    </tr>`;
+  }).join('');
 
   document.getElementById('resumo-loading').style.display='none';
   document.getElementById('resumo-content').style.display='block';
+
+  // Render antecipação tab
+  renderAnteTab(ids, totBanco, totAnte, mergedMonthly);
 }
 
-// ─── CSV Export ───
-function exportCSV(){
-  const rows = [['Empresa','Tipo','Vencimento','Nome','Documento','Valor','Status']];
-  Object.keys(allData).forEach(id=>{
-    const {receber, pagar} = allData[id];
-    receber.forEach(r=>rows.push([COMPANIES[id].name,'Receber',r.venc,r.nome,r.doc,r.saldo,r.status]));
-    pagar.forEach(p=>rows.push([COMPANIES[id].name,'Pagar',p.venc,p.nome,p.doc,p.saldo,p.status]));
+function renderAnteTab(ids, totBanco, totAnte, mergedMonthly){
+  // Ante card
+  const anteHtml = ids.map(id=>{
+    if(!allData[id]) return '';
+    const d=allData[id]; const c=COMPANIES[id];
+    return `<div class="ante-item">
+      <div class="ante-lbl" style="color:${c.color}">${c.name}</div>
+      ${d.ante.needed>0
+        ? `<div class="ante-val">R$ ${fmtCur(d.ante.needed)}</div>
+           <div class="ante-date">Pior mês: ${MONTHS_PT[d.ante.minMon]}/2026 | Saldo: R$ ${fmtCur(d.ante.minBalance)}</div>`
+        : `<div class="ante-ok">Caixa positivo ✓</div>`
+      }
+    </div>`;
+  }).join('');
+  document.getElementById('ante-card-main').innerHTML = `
+    <div class="ante-card-title">⚡ Antecipação Necessária para Manter Caixa Positivo</div>
+    <div class="ante-grid">
+      ${anteHtml}
+      <div class="ante-item ante-total">
+        <div class="ante-lbl" style="color:#c4b5fd">TOTAL CONSOLIDADO</div>
+        ${totAnte>0
+          ? `<div class="ante-val" style="font-size:26px">R$ ${fmtCur(totAnte)}</div>
+             <div class="ante-date">Soma dos déficits individuais</div>`
+          : `<div class="ante-ok" style="font-size:20px">Grupo saudável ✓</div>`
+        }
+      </div>
+    </div>`;
+
+  // Ante detail cards
+  document.getElementById('ante-detail').innerHTML = ids.map(id=>{
+    if(!allData[id]) return '';
+    const d=allData[id]; const c=COMPANIES[id];
+    const cob = d.totRec>0 ? (d.ante.needed/d.totRec*100).toFixed(1) : 0;
+    return `<div class="kpi purple" style="border-top-color:${c.color}">
+      <div class="kpi-lbl">${c.name}</div>
+      <div class="kpi-val" style="color:${c.color};font-size:20px">${d.ante.needed>0?'R$ '+fmtCur(d.ante.needed):'Não necessária'}</div>
+      <div class="kpi-sub">${d.ante.needed>0?`${cob}% do recebível total · Déficit em ${MONTHS_PT[d.ante.minMon]}/2026`:'Saldo banco cobre os pagamentos'}</div>
+    </div>`;
+  }).join('');
+
+  // Ante chart
+  if(charts['chartAnte']) charts['chartAnte'].destroy();
+  const anteAllMonthly = mergedMonthly;
+  const ante = calcAnte(anteAllMonthly, totBanco);
+  const withAnte = (() => {
+    let r = totBanco + ante.needed;
+    return anteAllMonthly.map(m=>{ r+=m.receber-m.pagar; return r; });
+  })();
+  const ctx = document.getElementById('chartAnte').getContext('2d');
+  charts['chartAnte'] = new Chart(ctx,{
+    data:{
+      labels:MONTHS_PT,
+      datasets:[
+        { type:'line', label:'Sem Antecipação', data:ante.running,
+          borderColor:'#c53030', backgroundColor:'rgba(197,48,48,.08)',
+          borderWidth:2.5, pointRadius:3, tension:.3, fill:true },
+        { type:'line', label:'Com Antecipação (R$'+fmtCur(ante.needed)+')',
+          data:withAnte, borderColor:'#276749', backgroundColor:'rgba(39,103,73,.08)',
+          borderWidth:2.5, pointRadius:3, tension:.3, fill:true },
+        { type:'line', label:'Linha zero', data:Array(12).fill(0),
+          borderColor:'#a0aec0', borderDash:[4,3], borderWidth:1, pointRadius:0 },
+      ]
+    },
+    options:{
+      responsive:true, maintainAspectRatio:false,
+      plugins:{legend:{labels:{color:'#4a5568',font:{size:11}}},
+        tooltip:{callbacks:{label:c=>` ${c.dataset.label}: R$ ${fmtCur(c.parsed.y)}`}}},
+      scales:{
+        x:{ticks:{color:'#718096',font:{size:11}},grid:{color:'#f0f4f8'}},
+        y:{ticks:{color:'#718096',font:{size:10},callback:v=>'R$'+fmtCur(v)},grid:{color:'rgba(224,231,239,.6)'}}
+      }
+    }
   });
-  const csv = rows.map(r=>r.map(v=>'"'+String(v||'').replace(/"/g,'""')+'"').join(',')).join('\n');
-  const blob = new Blob(['﻿'+csv],{type:'text/csv;charset=utf-8'});
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a'); a.href=url; a.download='fluxo-caixa-icc.csv'; a.click();
-  URL.revokeObjectURL(url);
+
+  document.getElementById('ante-loading').style.display='none';
+  document.getElementById('ante-content').style.display='block';
 }
 
-// ─── Main load ───
+// ── CSV Export ──
+function exportCSV(){
+  const rows=[['Empresa','Tipo','Vencimento','Nome','Documento','Valor','Status']];
+  Object.keys(allData).forEach(id=>{
+    const {receber,pagar} = allData[id]._raw || {};
+    if(!receber||!pagar) return;
+    receber.forEach(r=>rows.push([COMPANIES[id].name,'Receber',r.venc,r.nome,r.doc,r.saldo,r.status]));
+    pagar.forEach(p=>  rows.push([COMPANIES[id].name,'Pagar',  p.venc,p.nome,p.doc,p.saldo,p.status]));
+  });
+  const csv=rows.map(r=>r.map(v=>'"'+String(v||'').replace(/"/g,'""')+'"').join(',')).join('\n');
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(new Blob(['﻿'+csv],{type:'text/csv;charset=utf-8'}));
+  a.download='fluxo-caixa-icc-2026.csv'; a.click();
+}
+
+// ── Load all data ──
 async function loadAll(){
-  const btn = document.getElementById('btnLoad');
-  btn.disabled=true; btn.textContent='Carregando...';
-  document.getElementById('globalError').innerHTML='';
+  const btn=document.getElementById('btnLoad');
+  const status=document.getElementById('load-status');
+  btn.disabled=true; btn.textContent='⏳ Carregando...';
   allData={};
 
-  const dateFrom = document.getElementById('dateFrom').value;
-  const dateTo   = document.getElementById('dateTo').value;
-  if(!dateFrom||!dateTo){ alert('Selecione o período'); btn.disabled=false; btn.textContent='Carregar Dados'; return; }
+  const dFrom = document.getElementById('dateFrom').value;
+  const dTo   = document.getElementById('dateTo').value;
 
-  const baseParams = {
-    filtrar_por_data_de: isoToOmie(dateFrom),
-    filtrar_por_data_ate: isoToOmie(dateTo),
-    filtrar_por_tipo_data: 'V',
-    filtrar_por_status: 'ABERTO',
-  };
-
-  // Reset all company views
+  // Reset views
   ['instituto','telecom','medical'].forEach(id=>{
     document.getElementById(id+'-loading').style.display='none';
     document.getElementById(id+'-content').style.display='none';
     document.getElementById(id+'-err').innerHTML='';
   });
   document.getElementById('resumo-loading').style.display='flex';
-  document.getElementById('resumo-loading').innerHTML='<div class="spinner"></div><div>Carregando dados das 3 empresas...</div>';
+  document.getElementById('resumo-loading').innerHTML='<div class="spinner"></div><p>Carregando dados das 3 empresas...</p>';
   document.getElementById('resumo-content').style.display='none';
+  document.getElementById('ante-content').style.display='none';
 
-  // Fetch all companies in parallel
+  const baseReceber = {
+    filtrar_por_data_de: isoToOmie(dFrom),
+    filtrar_por_data_ate: isoToOmie(dTo),
+    filtrar_por_tipo_data: 'V',
+    filtrar_por_status: 'ABERTO',
+    apenas_importado_api: 'N',
+  };
+  const basePagar = {...baseReceber};
+
   const results = await Promise.allSettled(
     Object.keys(COMPANIES).map(async id=>{
       const c = COMPANIES[id];
       document.getElementById(id+'-loading').style.display='flex';
+      status.textContent = `Carregando ${c.name}...`;
       try {
-        const [receberRaw, pagarRaw] = await Promise.all([
-          fetchAllPages(c.key, c.secret, 'contareceber', 'ListarContasReceber', baseParams, 'conta_receber_cadastro'),
-          fetchAllPages(c.key, c.secret, 'contapagar',   'ListarContasPagar',   baseParams, 'conta_pagar_cadastro')
+        const [receberRaw, pagarRaw, saldoBanco] = await Promise.all([
+          fetchPages(c.key, c.secret, 'contareceber', 'ListarContasReceber', baseReceber, 'conta_receber_cadastro'),
+          fetchPages(c.key, c.secret, 'contapagar',   'ListarContasPagar',   basePagar,   'conta_pagar_cadastro'),
+          fetchSaldoBanco(c.key, c.secret),
         ]);
-        const receber = receberRaw.map(extractReceber).filter(r=>r.venc);
-        const pagar   = pagarRaw.map(extractPagar).filter(p=>p.venc);
-        allData[id] = renderCompany(id, receber, pagar);
-        return { id, ok:true };
+
+        console.log(`[${id}] receber raw: ${receberRaw.length}, pagar raw: ${pagarRaw.length}, banco: ${saldoBanco}`);
+
+        const receber = receberRaw.map(exRec).filter(r=>r.venc);
+        const pagar   = pagarRaw.map(exPag).filter(p=>p.venc);
+
+        console.log(`[${id}] receber filtrado: ${receber.length}, pagar filtrado: ${pagar.length}`);
+
+        const result = renderCompany(id, receber, pagar, saldoBanco);
+        result._raw = {receber, pagar};
+        allData[id] = result;
+        return {id, ok:true};
       } catch(err){
+        console.error(`[${id}]`, err);
         document.getElementById(id+'-loading').style.display='none';
-        document.getElementById(id+'-err').innerHTML=`<div class="err">Erro ao carregar ${COMPANIES[id].name}:\n${err.message}\n\nVerifique as credenciais e se a API Omie permite CORS para este domínio.</div>`;
-        return { id, ok:false, err };
+        document.getElementById(id+'-err').innerHTML =
+          `<div class="err-box">⚠️ Erro ao carregar ${c.name}:\n${err.message}\n\nVerifique as credenciais e a conectividade com a API Omie.</div>`;
+        return {id, ok:false, err};
       }
     })
   );
@@ -789,16 +853,16 @@ async function loadAll(){
 
   const now = new Date();
   document.getElementById('lastUpdate').textContent =
-    'Atualizado: '+now.toLocaleDateString('pt-BR')+' '+now.toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});
+    now.toLocaleDateString('pt-BR')+', '+now.toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
 
-  btn.disabled=false; btn.textContent='Atualizar';
+  status.textContent = results.filter(r=>r.value?.ok).length+'/3 empresas carregadas';
+  btn.disabled=false; btn.textContent='🔄 Atualizar';
 }
 
-// ─── Init ───
-(function init(){
-  const t = today();
-  document.getElementById('dateFrom').value = t;
-  document.getElementById('dateTo').value   = addDays(t, 90);
+// ── Init ──
+(function(){
+  document.getElementById('dateFrom').value = '2026-01-01';
+  document.getElementById('dateTo').value   = '2026-12-31';
 })();
 </script>
 </body>
