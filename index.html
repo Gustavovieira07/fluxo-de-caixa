@@ -334,8 +334,11 @@ const COMPANIES = {
   telecom:  { name:'ICC Telecom',   key:'4472437527558', secret:'eb030b4871537b1d984ff4078a469f75', color:'#10b981' },
   medical:  { name:'ICC Medical',   key:'7069173264153', secret:'9632f5b931f568b6b09accbf25f47496', color:'#f59e0b' },
 };
-const OMIE      = 'https://app.omie.com.br/api/v1/financas/';
-const OMIE_GRL  = 'https://app.omie.com.br/api/v1/geral/';
+// Se rodando no localhost (via node server.js), usa proxy local — resolve CORS.
+// Se rodando em servidor externo que já permite CORS, chama Omie direto.
+const IS_LOCAL  = ['localhost','127.0.0.1'].includes(location.hostname);
+const OMIE      = IS_LOCAL ? '/proxy/api/v1/financas/' : 'https://app.omie.com.br/api/v1/financas/';
+const OMIE_GRL  = IS_LOCAL ? '/proxy/api/v1/geral/'    : 'https://app.omie.com.br/api/v1/geral/';
 const MONTHS_PT = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
 const MONTHS_SH = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
 const DAYS_PT   = ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'];
