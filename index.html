@@ -395,41 +395,45 @@ async function fetchPages(key, secret, ep, call, params, listKey){
 async function fetchSaldo(key, secret){
   try{
     const d = await callOmie(OMIE_GRL, key, secret, 'contacorrente', 'ListarContasCorrentes',
-      {pagina:1, registros_por_pagina:50, apenas_importado_api:'N'});
-    const contas = d.ListarContasCorrentes || d.conta_corrente_cadastro || d.cadastros
-                || Object.values(d).find(v=>Array.isArray(v)) || [];
-    const total = contas.reduce((s,c)=>{
-      const f = c.saldo_atual ?? c.saldo ?? c.nSaldoAtual
-             ?? (c.info_conta_corrente||{}).saldo_atual
-             ?? (c.dados_bancarios||{}).saldo_atual ?? 0;
-      return s + (isNaN(+f)?0:+f);
-    },0);
-    console.log(`[saldo ${key.slice(-5)}] ${contas.length} contas → R$${fmtCur(total)}`);
+      {pagina:1, registros_por_pagina:50});
+    // Omie retorna chave "ListarContasCorrentes" com array de contas
+    const contas = Array.isArray(d.ListarContasCorrentes) ? d.ListarContasCorrentes
+                 : Object.values(d).find(v=>Array.isArray(v)) || [];
+    // saldo_inicial = último saldo registrado (mais próximo do banco disponível via API)
+    const ativas = contas.filter(c => c.inativo !== 'S' && c.tipo_conta_corrente !== 'CE');
+    const total  = ativas.reduce((s,c) => s + (+(c.saldo_inicial)||0), 0);
+    console.log(`[saldo ${key.slice(-5)}] ${ativas.length} contas ativas → R$${fmtCur(total)}`);
     return total;
   }catch(e){ console.warn('saldo banco falhou:',e.message); return 0; }
 }
 
-// ── Extract fields — tolerante a vários formatos Omie ──
+// ── Extract fields — Omie retorna estrutura FLAT (sem cabecalho) ──
+// Campos confirmados: data_vencimento, valor_documento, status_titulo (string),
+// numero_documento, codigo_lancamento_omie. Nome NÃO vem no listar.
 function exRec(raw){
-  const c=raw.cabecalho||raw, st=raw.status_titulo, cl=raw.clientes_documento||{};
+  const st = raw.status_titulo;
   return {
-    venc:  c.data_vencimento||raw.data_vencimento||'',
-    saldo: +( c.valor_saldo??raw.valor_saldo??c.valor_documento??raw.valor_documento??0 ),
-    valor: +( c.valor_documento??raw.valor_documento??0 ),
-    status:typeof st==='object'?(st.codigo_status||'ABERTO'):(st||'ABERTO'),
-    nome:  cl.nome_fantasia||c.nome_cliente||raw.nome_fantasia||raw.razao_social||'—',
-    doc:   c.numero_documento||raw.numero_documento||String(c.codigo_lancamento_omie||raw.codigo_lancamento_omie||'—'),
+    venc:   raw.data_vencimento || '',
+    saldo:  +(raw.valor_saldo ?? raw.valor_documento ?? 0),
+    valor:  +(raw.valor_documento ?? 0),
+    status: typeof st==='object' ? (st.codigo_status||'ABERTO') : (st||'ABERTO'),
+    nome:   raw.nome_fantasia || raw.nome_cliente || raw.razao_social ||
+            `Cód. ${raw.codigo_cliente_fornecedor||'—'}`,
+    doc:    raw.numero_documento || raw.numero_parcela ||
+            String(raw.codigo_lancamento_omie||'—'),
   };
 }
 function exPag(raw){
-  const c=raw.cabecalho||raw, st=raw.status_titulo, fn=raw.fornecedor_documento||{};
+  const st = raw.status_titulo;
   return {
-    venc:  c.data_vencimento||raw.data_vencimento||'',
-    saldo: +( c.valor_saldo??raw.valor_saldo??c.valor_documento??raw.valor_documento??0 ),
-    valor: +( c.valor_documento??raw.valor_documento??0 ),
-    status:typeof st==='object'?(st.codigo_status||'ABERTO'):(st||'ABERTO'),
-    nome:  fn.nome_fantasia||c.nome_fornecedor||raw.nome_fornecedor||raw.nome_fantasia||raw.razao_social||'—',
-    doc:   c.numero_documento||raw.numero_documento||String(c.codigo_lancamento_omie||raw.codigo_lancamento_omie||'—'),
+    venc:   raw.data_vencimento || '',
+    saldo:  +(raw.valor_saldo ?? raw.valor_documento ?? 0),
+    valor:  +(raw.valor_documento ?? 0),
+    status: typeof st==='object' ? (st.codigo_status||'ABERTO') : (st||'ABERTO'),
+    nome:   raw.nome_fantasia || raw.nome_fornecedor || raw.razao_social ||
+            `Cód. ${raw.codigo_cliente_fornecedor||'—'}`,
+    doc:    raw.numero_documento || raw.numero_parcela ||
+            String(raw.codigo_lancamento_omie||'—'),
   };
 }
 
@@ -841,13 +845,11 @@ async function loadAll(){
   btn.disabled=true; btn.textContent='⏳ Carregando...';
   allData={};
 
-  // ⚠️ SEM filtrar_por_status — buscamos tudo e filtramos em JS
-  // Isso garante que nenhum registro seja omitido por nome de status diferente do esperado
+  // filtrar_por_tipo_data NÃO existe na API Omie → causa erro SOAP → removido
+  // apenas_importado_api também removido (restringe desnecessariamente)
   const params = {
     filtrar_por_data_de: isoToOmie(document.getElementById('dateFrom').value),
     filtrar_por_data_ate: isoToOmie(document.getElementById('dateTo').value),
-    filtrar_por_tipo_data: 'V',
-    apenas_importado_api: 'N',
   };
 
   ['instituto','telecom','medical'].forEach(id=>{
@@ -983,8 +985,7 @@ async function runDiagnostic(){
     const body3 = {
       call:'ListarContasReceber', app_key:c.key, app_secret:c.secret,
       param:[{ pagina:1, registros_por_pagina:5,
-               filtrar_por_data_de:'01/01/2026', filtrar_por_data_ate:'31/12/2026',
-               filtrar_por_tipo_data:'V' }]
+               filtrar_por_data_de:'01/01/2026', filtrar_por_data_ate:'31/12/2026' }]
     };
     const resp3 = await fetch('https://app.omie.com.br/api/v1/financas/contareceber/',
       {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(body3)});
