@@ -8,171 +8,126 @@
   <style>
     *{box-sizing:border-box;margin:0;padding:0}
     body{font-family:'Segoe UI',system-ui,sans-serif;background:#f0f4f8;color:#1a2942;min-height:100vh}
-
-    /* ── HEADER ── */
-    .hdr{
-      background:linear-gradient(135deg,#0d2137 0%,#1a3a5c 100%);
-      color:#fff;padding:14px 28px;
-      display:flex;align-items:center;justify-content:space-between;
-    }
-    .hdr-l h1{font-size:18px;font-weight:700;display:flex;align-items:center;gap:8px}
+    .hdr{background:linear-gradient(135deg,#0d2137 0%,#1a3a5c 100%);color:#fff;padding:14px 28px;display:flex;align-items:center;justify-content:space-between}
+    .hdr-l h1{font-size:18px;font-weight:700}
     .hdr-l p{font-size:11px;color:#90aecb;margin-top:2px}
     .hdr-r{text-align:right;font-size:11px;color:#90aecb}
     .hdr-r strong{display:block;font-size:14px;font-weight:700;color:#fff;margin-top:2px}
-
-    /* ── TABS ── */
-    .tabs{
-      background:#fff;border-bottom:2px solid #dde4ef;
-      display:flex;padding:0 24px;gap:0;overflow-x:auto;
-      box-shadow:0 1px 4px rgba(0,0,0,.06);
-    }
-    .tab-btn{
-      padding:13px 20px;border:none;background:transparent;
-      color:#5a7186;font-size:13px;font-weight:500;cursor:pointer;
-      border-bottom:3px solid transparent;white-space:nowrap;
-      display:flex;align-items:center;gap:6px;transition:all .15s;
-      margin-bottom:-2px;
-    }
+    .tabs{background:#fff;border-bottom:2px solid #dde4ef;display:flex;padding:0 24px;overflow-x:auto;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+    .tab-btn{padding:13px 20px;border:none;background:transparent;color:#5a7186;font-size:13px;font-weight:500;cursor:pointer;border-bottom:3px solid transparent;white-space:nowrap;display:flex;align-items:center;gap:6px;transition:all .15s;margin-bottom:-2px}
     .tab-btn:hover{color:#1a3a5c}
     .tab-btn.active{color:#1a6fc4;border-bottom-color:#1a6fc4;font-weight:700}
-    .tab-icon{font-size:15px}
-
-    /* ── CONTENT ── */
-    .content{padding:22px 28px;max-width:1500px;margin:0 auto}
-
-    /* ── FILTERS BAR ── */
-    .fbar{
-      background:#fff;border-radius:10px;padding:12px 18px;
-      display:flex;align-items:center;gap:12px;flex-wrap:wrap;
-      box-shadow:0 1px 4px rgba(0,0,0,.06);border:1px solid #dde4ef;
-      margin-bottom:18px;
-    }
-    .fbar label{font-size:12px;color:#5a7186;font-weight:600}
-    .fi{
-      border:1px solid #c8d6e5;border-radius:6px;padding:5px 10px;
-      font-size:12px;color:#1a2942;background:#f8fafc;color-scheme:light;
-    }
-    .btn-primary{
-      background:#1a6fc4;border:none;border-radius:6px;
-      padding:6px 16px;color:#fff;font-size:12px;font-weight:700;
-      cursor:pointer;display:flex;align-items:center;gap:5px;transition:background .15s;
-    }
-    .btn-primary:hover:not(:disabled){background:#1558a0}
-    .btn-primary:disabled{background:#9db8d4;cursor:not-allowed}
-    .btn-sec{
-      background:#fff;border:1px solid #c8d6e5;border-radius:6px;
-      padding:5px 14px;color:#5a7186;font-size:12px;cursor:pointer;transition:all .15s;
-    }
-    .btn-sec:hover{border-color:#1a6fc4;color:#1a6fc4}
-
-    /* ── PANELS ── */
+    .content{padding:20px 28px;max-width:1600px;margin:0 auto}
     .tab-panel{display:none}
     .tab-panel.active{display:block}
-
-    /* ── SECTION BANNER ── */
-    .section-banner{
-      background:linear-gradient(135deg,#0d2137 0%,#1a3a5c 100%);
-      border-radius:10px;padding:22px 26px;margin-bottom:18px;color:#fff;
-    }
-    .section-banner h2{font-size:20px;font-weight:700;margin-bottom:4px}
+    .fbar{background:#fff;border-radius:10px;padding:12px 18px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;box-shadow:0 1px 4px rgba(0,0,0,.06);border:1px solid #dde4ef;margin-bottom:18px}
+    .fbar label{font-size:12px;color:#5a7186;font-weight:600}
+    .fi{border:1px solid #c8d6e5;border-radius:6px;padding:5px 10px;font-size:12px;color:#1a2942;background:#f8fafc;color-scheme:light}
+    .btn-primary{background:#1a6fc4;border:none;border-radius:6px;padding:6px 16px;color:#fff;font-size:12px;font-weight:700;cursor:pointer;transition:background .15s}
+    .btn-primary:hover:not(:disabled){background:#1558a0}
+    .btn-primary:disabled{background:#9db8d4;cursor:not-allowed}
+    .btn-sec{background:#fff;border:1px solid #c8d6e5;border-radius:6px;padding:5px 14px;color:#5a7186;font-size:12px;cursor:pointer;transition:all .15s}
+    .btn-sec:hover{border-color:#1a6fc4;color:#1a6fc4}
+    .section-banner{background:linear-gradient(135deg,#0d2137 0%,#1a3a5c 100%);border-radius:10px;padding:20px 26px;margin-bottom:18px;color:#fff}
+    .section-banner h2{font-size:19px;font-weight:700;margin-bottom:3px}
     .section-banner p{font-size:12px;color:#90aecb}
-
-    /* ── KPI CARDS ── */
-    .kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-bottom:18px}
-    .kpi{
-      background:#fff;border-radius:10px;padding:18px 20px;
-      box-shadow:0 1px 4px rgba(0,0,0,.07);
-      border-top:3px solid #1a6fc4;
-      border-left:1px solid #dde4ef;border-right:1px solid #dde4ef;border-bottom:1px solid #dde4ef;
-    }
-    .kpi.danger{border-top-color:#e53e3e}
-    .kpi.warn  {border-top-color:#d69e2e}
-    .kpi.good  {border-top-color:#2f855a}
-    .kpi.purple{border-top-color:#6b46c1}
-    .kpi-lbl{font-size:11px;color:#5a7186;font-weight:600;text-transform:uppercase;letter-spacing:.04em;margin-bottom:8px}
-    .kpi-val{font-size:26px;font-weight:800;color:#1a2942;line-height:1}
-    .kpi-val.danger{color:#c53030}
-    .kpi-val.good{color:#276749}
-    .kpi-sub{font-size:11px;color:#718096;margin-top:5px}
-    .kpi-row{display:flex;gap:18px;margin-top:8px;padding-top:8px;border-top:1px solid #edf2f7}
-    .kpi-delta{font-size:10px;color:#718096;text-align:center}
-    .kpi-delta span{display:block;font-weight:700;font-size:11px}
-    .kpi-delta .up{color:#2f855a}
-    .kpi-delta .dn{color:#c53030}
-
-    /* ── ANTECIPAÇÃO CARD ── */
-    .ante-card{
-      background:linear-gradient(135deg,#1a1756 0%,#2d3498 50%,#1a3a5c 100%);
-      border-radius:10px;padding:20px 24px;margin-bottom:18px;color:#fff;
-      box-shadow:0 4px 15px rgba(26,111,196,.25);
-    }
-    .ante-card-title{
-      font-size:12px;font-weight:700;color:#a5b4fc;
-      text-transform:uppercase;letter-spacing:.06em;
-      margin-bottom:14px;display:flex;align-items:center;gap:8px;
-    }
-    .ante-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:0}
-    .ante-item{
-      padding:0 20px;text-align:center;
-      border-right:1px solid rgba(255,255,255,.1);
-    }
-    .ante-item:first-child{padding-left:0}
-    .ante-item:last-child{border-right:none}
-    .ante-lbl{font-size:11px;color:#a5b4fc;margin-bottom:4px}
-    .ante-val{font-size:22px;font-weight:800;color:#fbbf24}
-    .ante-date{font-size:10px;color:#818cf8;margin-top:2px}
-    .ante-ok{font-size:18px;font-weight:700;color:#6ee7b7}
-    .ante-total{border-left:1px solid rgba(255,255,255,.2)!important;padding-left:24px!important}
-
-    /* ── CHARTS ── */
-    .chart-card{
-      background:#fff;border-radius:10px;padding:16px 18px;
-      box-shadow:0 1px 4px rgba(0,0,0,.07);border:1px solid #dde4ef;
-      margin-bottom:18px;
-    }
-    .chart-card-title{font-size:13px;font-weight:700;color:#2d3748;margin-bottom:14px;display:flex;align-items:center;gap:6px}
-    .chart-canvas{position:relative;height:270px}
-
-    /* ── TABLES ── */
+    .kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(185px,1fr));gap:14px;margin-bottom:18px}
+    .kpi{background:#fff;border-radius:10px;padding:16px 18px;box-shadow:0 1px 4px rgba(0,0,0,.07);border-top:3px solid #1a6fc4;border:1px solid #dde4ef;border-top:3px solid #1a6fc4}
+    .kpi.danger{border-top-color:#e53e3e}.kpi.good{border-top-color:#2f855a}.kpi.warn{border-top-color:#d69e2e}.kpi.purple{border-top-color:#6b46c1}
+    .kpi-lbl{font-size:10px;color:#5a7186;font-weight:700;text-transform:uppercase;letter-spacing:.05em;margin-bottom:7px}
+    .kpi-val{font-size:24px;font-weight:800;color:#1a2942;line-height:1}
+    .kpi-val.danger{color:#c53030}.kpi-val.good{color:#276749}.kpi-val.warn{color:#92400e}
+    .kpi-sub{font-size:11px;color:#718096;margin-top:4px}
+    .chart-card{background:#fff;border-radius:10px;padding:16px 18px;box-shadow:0 1px 4px rgba(0,0,0,.07);border:1px solid #dde4ef;margin-bottom:18px}
+    .chart-card-title{font-size:13px;font-weight:700;color:#2d3748;margin-bottom:12px}
+    .chart-canvas{position:relative;height:260px}
     .two-col{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:18px}
     @media(max-width:900px){.two-col{grid-template-columns:1fr}}
     .tbl-card{background:#fff;border-radius:10px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.07);border:1px solid #dde4ef}
-    .tbl-card-head{
-      padding:12px 16px;display:flex;justify-content:space-between;align-items:center;
-      border-bottom:1px solid #edf2f7;
-    }
+    .tbl-card-head{padding:12px 16px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #edf2f7}
     .tbl-card-title{font-size:13px;font-weight:700}
     .tbl-count{font-size:11px;color:#718096;background:#f7fafc;padding:2px 8px;border-radius:10px;border:1px solid #e2e8f0}
-    .tbl-scroll{max-height:350px;overflow-y:auto;overflow-x:auto}
+    .tbl-scroll{max-height:380px;overflow-y:auto;overflow-x:auto}
     table{width:100%;border-collapse:collapse}
-    thead th{
-      background:#f7fafc;padding:8px 12px;text-align:left;
-      font-size:10px;font-weight:700;text-transform:uppercase;
-      letter-spacing:.05em;color:#718096;position:sticky;top:0;z-index:1;
-      border-bottom:1px solid #e2e8f0;
-    }
+    thead th{background:#f7fafc;padding:8px 12px;text-align:left;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:#718096;position:sticky;top:0;z-index:1;border-bottom:1px solid #e2e8f0}
     tbody tr{border-bottom:1px solid #f0f4f8;transition:background .1s}
     tbody tr:hover{background:#f7fafc}
     tbody tr:last-child{border-bottom:none}
     td{padding:8px 12px;font-size:12px;color:#2d3748}
     .badge{display:inline-block;padding:2px 8px;border-radius:4px;font-size:10px;font-weight:700;text-transform:uppercase}
-    .b-aberto {background:#fff5f5;color:#c53030;border:1px solid #fed7d7}
+    .b-aberto{background:#fff5f5;color:#c53030;border:1px solid #fed7d7}
     .b-recebido{background:#f0fff4;color:#276749;border:1px solid #c6f6d5}
-    .b-pago   {background:#f0fff4;color:#276749;border:1px solid #c6f6d5}
+    .b-pago{background:#f0fff4;color:#276749;border:1px solid #c6f6d5}
     .b-vencido{background:#fffbeb;color:#92400e;border:1px solid #fde68a}
-
-    /* ── RESUMO TABLE ── */
-    .resumo-tbl-card{background:#fff;border-radius:10px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.07);border:1px solid #dde4ef;margin-bottom:18px}
-    .company-dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:6px;vertical-align:middle}
-
-    /* ── LOADING / ERROR ── */
-    .loading{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:60px 20px;color:#718096}
-    .spinner{width:36px;height:36px;border:3px solid #e2e8f0;border-top-color:#1a6fc4;border-radius:50%;animation:spin .7s linear infinite;margin-bottom:12px}
+    .ante-card{background:linear-gradient(135deg,#1a1756 0%,#2d3498 50%,#1a3a5c 100%);border-radius:10px;padding:20px 24px;margin-bottom:18px;color:#fff;box-shadow:0 4px 15px rgba(26,111,196,.25)}
+    .ante-card-title{font-size:11px;font-weight:700;color:#a5b4fc;text-transform:uppercase;letter-spacing:.06em;margin-bottom:14px}
+    .ante-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:0}
+    .ante-item{padding:0 18px;text-align:center;border-right:1px solid rgba(255,255,255,.1)}
+    .ante-item:first-child{padding-left:0}.ante-item:last-child{border-right:none}
+    .ante-lbl{font-size:11px;color:#a5b4fc;margin-bottom:3px}
+    .ante-val{font-size:21px;font-weight:800;color:#fbbf24}
+    .ante-date{font-size:10px;color:#818cf8;margin-top:2px}
+    .ante-ok{font-size:17px;font-weight:700;color:#6ee7b7}
+    .loading{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:50px 20px;color:#718096}
+    .spinner{width:34px;height:34px;border:3px solid #e2e8f0;border-top-color:#1a6fc4;border-radius:50%;animation:spin .7s linear infinite;margin-bottom:10px}
     @keyframes spin{to{transform:rotate(360deg)}}
     .loading p{font-size:13px}
-    .err-box{background:#fff5f5;border:1px solid #fed7d7;border-radius:8px;padding:14px 16px;color:#c53030;font-size:12px;margin:12px 0;white-space:pre-wrap}
+    .err-box{background:#fff5f5;border:1px solid #fed7d7;border-radius:8px;padding:14px 16px;color:#c53030;font-size:12px;margin:10px 0;white-space:pre-wrap}
+    .company-dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:6px;vertical-align:middle}
 
-    /* SCROLLBAR */
+    /* ── PERIOD DRILL-DOWN BAR ── */
+    .drill-bar{
+      background:#fff;border:1px solid #dde4ef;border-radius:10px;
+      padding:12px 18px;margin-bottom:18px;
+      display:flex;align-items:center;gap:14px;flex-wrap:wrap;
+      box-shadow:0 1px 4px rgba(0,0,0,.05);
+    }
+    .drill-bar label{font-size:12px;font-weight:700;color:#1a2942}
+    .month-select{
+      border:1px solid #c8d6e5;border-radius:6px;padding:5px 10px;
+      font-size:13px;color:#1a2942;background:#f8fafc;cursor:pointer;
+      font-weight:600;color-scheme:light;
+    }
+    .drill-nav{display:flex;gap:4px}
+    .drill-nav button{
+      background:#f0f4f8;border:1px solid #c8d6e5;border-radius:6px;
+      padding:4px 10px;font-size:13px;cursor:pointer;color:#1a2942;
+      transition:all .1s;
+    }
+    .drill-nav button:hover{background:#1a6fc4;color:#fff;border-color:#1a6fc4}
+    .drill-nav button.active-month{background:#1a6fc4;color:#fff;border-color:#1a6fc4;font-weight:700}
+
+    /* ── DAILY TABLE ── */
+    .daily-card{background:#fff;border-radius:10px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.07);border:1px solid #dde4ef;margin-bottom:18px}
+    .daily-card-head{padding:12px 16px;border-bottom:1px solid #edf2f7;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px}
+    .daily-scroll{max-height:480px;overflow-y:auto}
+    .day-row-date{font-weight:700;white-space:nowrap;color:#1a3a5c}
+    .day-row-weekend td{background:#fafbfc!important}
+    .day-row-today td{background:#eff6ff!important}
+    .saldo-pos{color:#276749;font-weight:700}
+    .saldo-neg{color:#c53030;font-weight:700}
+    .saldo-zero{color:#718096}
+    .bar-cell{width:120px}
+    .mini-bar{height:6px;border-radius:3px;display:inline-block;vertical-align:middle}
+
+    /* ── WEEKLY CARD ── */
+    .weekly-card{background:#fff;border-radius:10px;padding:16px 18px;box-shadow:0 1px 4px rgba(0,0,0,.07);border:1px solid #dde4ef;margin-bottom:18px}
+    .weekly-title{font-size:13px;font-weight:700;color:#2d3748;margin-bottom:14px;display:flex;justify-content:space-between;align-items:center}
+    .week-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px}
+    .week-item{border:1px solid #e2e8f0;border-radius:8px;padding:12px 14px;position:relative;overflow:hidden}
+    .week-item.best-rec{border-color:#c6f6d5;background:#f0fff4}
+    .week-item.best-pag{border-color:#fed7d7;background:#fff5f5}
+    .week-num{font-size:11px;font-weight:700;color:#718096;text-transform:uppercase;margin-bottom:6px}
+    .week-dates{font-size:10px;color:#a0aec0;margin-bottom:8px}
+    .week-rec{font-size:15px;font-weight:800;color:#276749}
+    .week-pag{font-size:15px;font-weight:800;color:#c53030;margin-top:3px}
+    .week-saldo{font-size:12px;font-weight:700;margin-top:5px;padding-top:5px;border-top:1px solid #e2e8f0}
+    .week-badge{position:absolute;top:8px;right:8px;font-size:9px;padding:2px 6px;border-radius:4px;font-weight:700}
+    .week-badge-rec{background:#c6f6d5;color:#276749}
+    .week-badge-pag{background:#fed7d7;color:#c53030}
+    .week-bar-rec{height:4px;border-radius:2px;background:#2f855a;margin-top:4px;transition:width .3s}
+    .week-bar-pag{height:4px;border-radius:2px;background:#c53030;margin-top:2px;transition:width .3s}
+
     ::-webkit-scrollbar{width:5px;height:5px}
     ::-webkit-scrollbar-track{background:transparent}
     ::-webkit-scrollbar-thumb{background:#c8d6e5;border-radius:4px}
@@ -180,212 +135,204 @@
 </head>
 <body>
 
-<!-- ═══ HEADER ═══ -->
 <div class="hdr">
   <div class="hdr-l">
     <h1>📊 Fluxo de Caixa — ICC Grupo</h1>
-    <p>Gerado automaticamente via integração Omie API</p>
+    <p>Integração direta Omie API · Atualizado automaticamente</p>
   </div>
-  <div class="hdr-r">
-    Última atualização
-    <strong id="lastUpdate">—</strong>
-  </div>
+  <div class="hdr-r">Última atualização<strong id="lastUpdate">—</strong></div>
 </div>
 
-<!-- ═══ TABS ═══ -->
 <div class="tabs">
-  <button class="tab-btn active t-resumo"    onclick="switchTab('resumo')">   <span class="tab-icon">📊</span> Consolidado</button>
-  <button class="tab-btn t-ante"             onclick="switchTab('ante')">    <span class="tab-icon">⚡</span> Antecipação</button>
-  <button class="tab-btn t-instituto"        onclick="switchTab('instituto')"><span class="tab-icon">🏛️</span> ICC Instituto</button>
-  <button class="tab-btn t-telecom"          onclick="switchTab('telecom')">  <span class="tab-icon">📡</span> ICC Telecom</button>
-  <button class="tab-btn t-medical"          onclick="switchTab('medical')">  <span class="tab-icon">🏥</span> ICC Medical</button>
+  <button class="tab-btn active t-resumo"    onclick="switchTab('resumo')">  <span>📊</span> Consolidado</button>
+  <button class="tab-btn t-ante"             onclick="switchTab('ante')">    <span>⚡</span> Antecipação</button>
+  <button class="tab-btn t-instituto"        onclick="switchTab('instituto')"><span>🏛️</span> ICC Instituto</button>
+  <button class="tab-btn t-telecom"          onclick="switchTab('telecom')">  <span>📡</span> ICC Telecom</button>
+  <button class="tab-btn t-medical"          onclick="switchTab('medical')">  <span>🏥</span> ICC Medical</button>
 </div>
 
-<!-- ═══ CONTENT ═══ -->
 <div class="content">
 
-  <!-- Filters -->
+  <!-- FILTERS -->
   <div class="fbar">
-    <label>Período:</label>
+    <label>Período base:</label>
     <input type="date" id="dateFrom" class="fi"/>
     <label>até</label>
     <input type="date" id="dateTo"   class="fi"/>
     <button class="btn-primary" id="btnLoad" onclick="loadAll()">🔄 Carregar Dados</button>
     <button class="btn-sec" onclick="exportCSV()">⬇ Exportar CSV</button>
-    <div id="load-status" style="font-size:12px;color:#718096;margin-left:6px"></div>
+    <span id="load-status" style="font-size:12px;color:#718096"></span>
   </div>
 
-  <!-- ──── CONSOLIDADO ──── -->
+  <!-- ═══ CONSOLIDADO ═══ -->
   <div id="tab-resumo" class="tab-panel active">
     <div id="resumo-loading" class="loading">
       <div class="spinner"></div>
       <p>Clique em "Carregar Dados" para iniciar</p>
     </div>
     <div id="resumo-content" style="display:none">
+
       <div class="section-banner">
         <h2>Resumo Executivo Consolidado — ICC Grupo</h2>
         <p id="resumo-subtitle">Visão de Caixa Anual — 2026</p>
       </div>
+
       <div class="kpi-grid" id="resumo-kpis"></div>
+
+      <!-- Antecipação card -->
+      <div class="ante-card" id="ante-card-consolidado"></div>
+
+      <!-- Month drill-down bar -->
+      <div class="drill-bar">
+        <label>📅 Visualizar mês:</label>
+        <div class="drill-nav" id="month-nav"></div>
+        <select class="month-select" id="month-select" onchange="onMonthChange(this.value)"></select>
+        <span style="font-size:11px;color:#718096" id="drill-info"></span>
+      </div>
+
+      <!-- Weekly card -->
+      <div class="weekly-card" id="weekly-card">
+        <div class="weekly-title">
+          <span id="weekly-title-text">Semanas do Mês — Receita e Despesa</span>
+          <span style="font-size:11px;color:#718096">🟢 Maior receita &nbsp; 🔴 Maior despesa</span>
+        </div>
+        <div class="week-grid" id="week-grid"></div>
+      </div>
+
+      <!-- Daily table -->
+      <div class="daily-card">
+        <div class="daily-card-head">
+          <span class="tbl-card-title" id="daily-title">Fluxo Diário</span>
+          <span style="font-size:11px;color:#718096">Todas as empresas consolidadas</span>
+        </div>
+        <div class="daily-scroll">
+          <table>
+            <thead>
+              <tr>
+                <th style="width:100px">Data</th>
+                <th style="width:80px">Dia</th>
+                <th style="text-align:right">Entradas (R$)</th>
+                <th style="text-align:right">Saídas (R$)</th>
+                <th style="text-align:right">Líquido Dia (R$)</th>
+                <th style="text-align:right">Saldo Acum. (R$)</th>
+                <th>Distribuição</th>
+                <th>Títulos</th>
+              </tr>
+            </thead>
+            <tbody id="daily-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Monthly chart -->
       <div class="chart-card">
-        <div class="chart-card-title">📈 Fluxo de Caixa Consolidado — Mensal 2026</div>
+        <div class="chart-card-title">📈 Fluxo de Caixa Mensal Consolidado — 2026</div>
         <div class="chart-canvas"><canvas id="chartResumo"></canvas></div>
       </div>
-      <div class="resumo-tbl-card">
+
+      <!-- By-company summary -->
+      <div class="tbl-card" style="margin-bottom:18px">
         <div class="tbl-card-head"><span class="tbl-card-title">Resumo por Empresa</span></div>
         <div class="tbl-scroll">
           <table>
             <thead><tr>
-              <th>Empresa</th><th>Saldo Banco (R$)</th>
-              <th>A Receber (R$)</th><th>A Pagar (R$)</th>
-              <th>Saldo Projetado (R$)</th><th>Déficit Máx (R$)</th>
-              <th>Antecipação Necessária (R$)</th><th>Pior Data</th>
+              <th>Empresa</th><th style="text-align:right">Saldo Banco</th>
+              <th style="text-align:right">A Receber</th><th style="text-align:right">A Pagar</th>
+              <th style="text-align:right">Saldo Projetado</th>
+              <th style="text-align:right">Antecipação Necessária</th><th>Pior Mês</th>
             </tr></thead>
             <tbody id="resumo-tbody"></tbody>
           </table>
         </div>
       </div>
+
     </div>
   </div>
 
-  <!-- ──── ANTECIPAÇÃO ──── -->
+  <!-- ═══ ANTECIPAÇÃO ═══ -->
   <div id="tab-ante" class="tab-panel">
-    <div id="ante-loading" class="loading" style="display:none">
-      <div class="spinner"></div><p>Calculando antecipações...</p>
-    </div>
+    <div id="ante-loading" class="loading" style="display:none"><div class="spinner"></div><p>Calculando...</p></div>
     <div id="ante-content" style="display:none">
-      <div class="section-banner">
-        <h2>⚡ Antecipação de Recebíveis</h2>
-        <p>Valor mínimo a antecipar para manter caixa positivo em cada empresa</p>
-      </div>
+      <div class="section-banner"><h2>⚡ Antecipação de Recebíveis</h2><p>Valor mínimo a antecipar para manter caixa positivo</p></div>
       <div class="ante-card" id="ante-card-main"></div>
       <div class="chart-card">
-        <div class="chart-card-title">📉 Projeção de Saldo Acumulado — Com vs Sem Antecipação</div>
+        <div class="chart-card-title">📉 Projeção de Saldo — Com vs Sem Antecipação</div>
         <div class="chart-canvas"><canvas id="chartAnte"></canvas></div>
       </div>
       <div class="kpi-grid" id="ante-detail"></div>
     </div>
   </div>
 
-  <!-- ──── INSTITUTO ──── -->
+  <!-- ═══ INSTITUTO ═══ -->
   <div id="tab-instituto" class="tab-panel">
     <div id="instituto-loading" class="loading" style="display:none"><div class="spinner"></div><p>Carregando Instituto...</p></div>
     <div id="instituto-err"></div>
     <div id="instituto-content" style="display:none">
-      <div class="section-banner" style="border-left:5px solid #3b82f6">
-        <h2>🏛️ ICC Instituto</h2>
-        <p id="instituto-period"></p>
-      </div>
+      <div class="section-banner" style="border-left:5px solid #3b82f6"><h2>🏛️ ICC Instituto</h2><p id="instituto-period"></p></div>
       <div class="kpi-grid" id="instituto-kpis"></div>
-      <div class="chart-card">
-        <div class="chart-card-title">📈 Fluxo de Caixa — Instituto (mensal)</div>
-        <div class="chart-canvas"><canvas id="chartInstituto"></canvas></div>
-      </div>
+      <div class="chart-card"><div class="chart-card-title">📈 Fluxo Mensal — Instituto</div><div class="chart-canvas"><canvas id="chartInstituto"></canvas></div></div>
       <div class="two-col">
-        <div class="tbl-card">
-          <div class="tbl-card-head">
-            <span class="tbl-card-title" style="color:#276749">▲ Contas a Receber</span>
-            <span class="tbl-count" id="instituto-rec-ct"></span>
-          </div>
-          <div class="tbl-scroll"><table>
-            <thead><tr><th>Vencimento</th><th>Cliente</th><th>Documento</th><th style="text-align:right">Valor (R$)</th><th>Status</th></tr></thead>
-            <tbody id="instituto-rec-body"></tbody>
-          </table></div>
-        </div>
-        <div class="tbl-card">
-          <div class="tbl-card-head">
-            <span class="tbl-card-title" style="color:#c53030">▼ Contas a Pagar</span>
-            <span class="tbl-count" id="instituto-pag-ct"></span>
-          </div>
-          <div class="tbl-scroll"><table>
-            <thead><tr><th>Vencimento</th><th>Fornecedor</th><th>Documento</th><th style="text-align:right">Valor (R$)</th><th>Status</th></tr></thead>
-            <tbody id="instituto-pag-body"></tbody>
-          </table></div>
-        </div>
+        <div class="tbl-card"><div class="tbl-card-head"><span class="tbl-card-title" style="color:#276749">▲ A Receber</span><span class="tbl-count" id="instituto-rec-ct"></span></div><div class="tbl-scroll"><table><thead><tr><th>Vencimento</th><th>Cliente</th><th>Documento</th><th style="text-align:right">Valor</th><th>Status</th></tr></thead><tbody id="instituto-rec-body"></tbody></table></div></div>
+        <div class="tbl-card"><div class="tbl-card-head"><span class="tbl-card-title" style="color:#c53030">▼ A Pagar</span><span class="tbl-count" id="instituto-pag-ct"></span></div><div class="tbl-scroll"><table><thead><tr><th>Vencimento</th><th>Fornecedor</th><th>Documento</th><th style="text-align:right">Valor</th><th>Status</th></tr></thead><tbody id="instituto-pag-body"></tbody></table></div></div>
       </div>
     </div>
   </div>
 
-  <!-- ──── TELECOM ──── -->
+  <!-- ═══ TELECOM ═══ -->
   <div id="tab-telecom" class="tab-panel">
     <div id="telecom-loading" class="loading" style="display:none"><div class="spinner"></div><p>Carregando Telecom...</p></div>
     <div id="telecom-err"></div>
     <div id="telecom-content" style="display:none">
-      <div class="section-banner" style="border-left:5px solid #10b981">
-        <h2>📡 ICC Telecom</h2>
-        <p id="telecom-period"></p>
-      </div>
+      <div class="section-banner" style="border-left:5px solid #10b981"><h2>📡 ICC Telecom</h2><p id="telecom-period"></p></div>
       <div class="kpi-grid" id="telecom-kpis"></div>
-      <div class="chart-card">
-        <div class="chart-card-title">📈 Fluxo de Caixa — Telecom (mensal)</div>
-        <div class="chart-canvas"><canvas id="chartTelecom"></canvas></div>
-      </div>
+      <div class="chart-card"><div class="chart-card-title">📈 Fluxo Mensal — Telecom</div><div class="chart-canvas"><canvas id="chartTelecom"></canvas></div></div>
       <div class="two-col">
-        <div class="tbl-card">
-          <div class="tbl-card-head"><span class="tbl-card-title" style="color:#276749">▲ Contas a Receber</span><span class="tbl-count" id="telecom-rec-ct"></span></div>
-          <div class="tbl-scroll"><table><thead><tr><th>Vencimento</th><th>Cliente</th><th>Documento</th><th style="text-align:right">Valor (R$)</th><th>Status</th></tr></thead><tbody id="telecom-rec-body"></tbody></table></div>
-        </div>
-        <div class="tbl-card">
-          <div class="tbl-card-head"><span class="tbl-card-title" style="color:#c53030">▼ Contas a Pagar</span><span class="tbl-count" id="telecom-pag-ct"></span></div>
-          <div class="tbl-scroll"><table><thead><tr><th>Vencimento</th><th>Fornecedor</th><th>Documento</th><th style="text-align:right">Valor (R$)</th><th>Status</th></tr></thead><tbody id="telecom-pag-body"></tbody></table></div>
-        </div>
+        <div class="tbl-card"><div class="tbl-card-head"><span class="tbl-card-title" style="color:#276749">▲ A Receber</span><span class="tbl-count" id="telecom-rec-ct"></span></div><div class="tbl-scroll"><table><thead><tr><th>Vencimento</th><th>Cliente</th><th>Documento</th><th style="text-align:right">Valor</th><th>Status</th></tr></thead><tbody id="telecom-rec-body"></tbody></table></div></div>
+        <div class="tbl-card"><div class="tbl-card-head"><span class="tbl-card-title" style="color:#c53030">▼ A Pagar</span><span class="tbl-count" id="telecom-pag-ct"></span></div><div class="tbl-scroll"><table><thead><tr><th>Vencimento</th><th>Fornecedor</th><th>Documento</th><th style="text-align:right">Valor</th><th>Status</th></tr></thead><tbody id="telecom-pag-body"></tbody></table></div></div>
       </div>
     </div>
   </div>
 
-  <!-- ──── MEDICAL ──── -->
+  <!-- ═══ MEDICAL ═══ -->
   <div id="tab-medical" class="tab-panel">
     <div id="medical-loading" class="loading" style="display:none"><div class="spinner"></div><p>Carregando Medical...</p></div>
     <div id="medical-err"></div>
     <div id="medical-content" style="display:none">
-      <div class="section-banner" style="border-left:5px solid #f59e0b">
-        <h2>🏥 ICC Medical</h2>
-        <p id="medical-period"></p>
-      </div>
+      <div class="section-banner" style="border-left:5px solid #f59e0b"><h2>🏥 ICC Medical</h2><p id="medical-period"></p></div>
       <div class="kpi-grid" id="medical-kpis"></div>
-      <div class="chart-card">
-        <div class="chart-card-title">📈 Fluxo de Caixa — Medical (mensal)</div>
-        <div class="chart-canvas"><canvas id="chartMedical"></canvas></div>
-      </div>
+      <div class="chart-card"><div class="chart-card-title">📈 Fluxo Mensal — Medical</div><div class="chart-canvas"><canvas id="chartMedical"></canvas></div></div>
       <div class="two-col">
-        <div class="tbl-card">
-          <div class="tbl-card-head"><span class="tbl-card-title" style="color:#276749">▲ Contas a Receber</span><span class="tbl-count" id="medical-rec-ct"></span></div>
-          <div class="tbl-scroll"><table><thead><tr><th>Vencimento</th><th>Cliente</th><th>Documento</th><th style="text-align:right">Valor (R$)</th><th>Status</th></tr></thead><tbody id="medical-rec-body"></tbody></table></div>
-        </div>
-        <div class="tbl-card">
-          <div class="tbl-card-head"><span class="tbl-card-title" style="color:#c53030">▼ Contas a Pagar</span><span class="tbl-count" id="medical-pag-ct"></span></div>
-          <div class="tbl-scroll"><table><thead><tr><th>Vencimento</th><th>Fornecedor</th><th>Documento</th><th style="text-align:right">Valor (R$)</th><th>Status</th></tr></thead><tbody id="medical-pag-body"></tbody></table></div>
-        </div>
+        <div class="tbl-card"><div class="tbl-card-head"><span class="tbl-card-title" style="color:#276749">▲ A Receber</span><span class="tbl-count" id="medical-rec-ct"></span></div><div class="tbl-scroll"><table><thead><tr><th>Vencimento</th><th>Cliente</th><th>Documento</th><th style="text-align:right">Valor</th><th>Status</th></tr></thead><tbody id="medical-rec-body"></tbody></table></div></div>
+        <div class="tbl-card"><div class="tbl-card-head"><span class="tbl-card-title" style="color:#c53030">▼ A Pagar</span><span class="tbl-count" id="medical-pag-ct"></span></div><div class="tbl-scroll"><table><thead><tr><th>Vencimento</th><th>Fornecedor</th><th>Documento</th><th style="text-align:right">Valor</th><th>Status</th></tr></thead><tbody id="medical-pag-body"></tbody></table></div></div>
       </div>
     </div>
   </div>
 
-</div><!-- /content -->
+</div>
 
 <script>
 'use strict';
-
-// ── Config ──
 const COMPANIES = {
-  instituto: { name:'ICC Instituto', key:'3946880386449', secret:'0c15f825cded97455749c7d6b7558f1e', color:'#3b82f6', accentClass:'b-azul' },
-  telecom:   { name:'ICC Telecom',   key:'4472437527558', secret:'eb030b4871537b1d984ff4078a469f75', color:'#10b981', accentClass:'b-verde' },
-  medical:   { name:'ICC Medical',   key:'7069173264153', secret:'9632f5b931f568b6b09accbf25f47496', color:'#f59e0b', accentClass:'b-amarelo' },
+  instituto:{ name:'ICC Instituto', key:'3946880386449', secret:'0c15f825cded97455749c7d6b7558f1e', color:'#3b82f6' },
+  telecom:  { name:'ICC Telecom',   key:'4472437527558', secret:'eb030b4871537b1d984ff4078a469f75', color:'#10b981' },
+  medical:  { name:'ICC Medical',   key:'7069173264153', secret:'9632f5b931f568b6b09accbf25f47496', color:'#f59e0b' },
 };
-const OMIE = 'https://app.omie.com.br/api/v1/financas/';
-const OMIE_GERAL = 'https://app.omie.com.br/api/v1/geral/';
-const MONTHS_PT = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
+const OMIE      = 'https://app.omie.com.br/api/v1/financas/';
+const OMIE_GRL  = 'https://app.omie.com.br/api/v1/geral/';
+const MONTHS_PT = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+const MONTHS_SH = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
+const DAYS_PT   = ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'];
 
-let charts = {};
-let allData = {};
+let charts = {}, allData = {}, selectedMonth = new Date().getMonth();
 
-// ── Utils ──
+// ── Utilities ──
 const isoToOmie = s => { const[y,m,d]=s.split('-'); return `${d}/${m}/${y}`; };
-const omieToIso  = s => { if(!s)return''; const[d,m,y]=s.split('/'); return `${y}-${m}-${d}`; };
-const omieToTs   = s => { if(!s||!s.includes('/'))return 0; const[d,m,y]=s.split('/'); return new Date(+y,+m-1,+d).getTime(); };
-const fmtCur = v => new Intl.NumberFormat('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2}).format(v||0);
-const today  = () => new Date().toISOString().split('T')[0];
-const addDays= (iso,n) => { const d=new Date(iso+'T00:00:00'); d.setDate(d.getDate()+n); return d.toISOString().split('T')[0]; };
+const omieToIso = s => { if(!s||!s.includes('/'))return''; const[d,m,y]=s.split('/'); return `${y}-${m}-${d}`; };
+const omieToTs  = s => { if(!s||!s.includes('/'))return 0; const[d,m,y]=s.split('/'); return new Date(+y,+m-1,+d).getTime(); };
 const omieMonth = s => { if(!s||!s.includes('/'))return -1; const[,m]=s.split('/'); return +m-1; };
+const omieDay   = s => { if(!s||!s.includes('/'))return null; const[d,m,y]=s.split('/'); return new Date(+y,+m-1,+d); };
+const fmtCur    = v => new Intl.NumberFormat('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2}).format(v||0);
+const today     = () => new Date().toISOString().split('T')[0];
 
 function switchTab(id){
   document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
@@ -394,135 +341,275 @@ function switchTab(id){
   document.querySelector('.tab-btn.t-'+id).classList.add('active');
 }
 
-// ── Omie API ──
-async function callOmie(base, key, secret, endpoint, call, params){
-  const url = base + endpoint + '/';
-  const body = { call, app_key:key, app_secret:secret, param:[{...params}] };
-  const resp = await fetch(url, {
+// ── API ──
+async function callOmie(base, key, secret, ep, call, params){
+  const r = await fetch(base+ep+'/',{
     method:'POST',
     headers:{'Content-Type':'application/json'},
-    body: JSON.stringify(body)
+    body:JSON.stringify({call, app_key:key, app_secret:secret, param:[{...params}]})
   });
-  if(!resp.ok) throw new Error(`HTTP ${resp.status} ao chamar ${call}`);
-  const data = await resp.json();
-  if(data.faultstring) throw new Error(`[${call}] ${data.faultstring}`);
-  return data;
+  if(!r.ok) throw new Error(`HTTP ${r.status} — ${call}`);
+  const d = await r.json();
+  if(d.faultstring) throw new Error(d.faultstring);
+  return d;
 }
 
-async function fetchPages(key, secret, endpoint, call, baseParams, listKey){
-  let items=[], page=1, totalPages=1;
+async function fetchPages(key, secret, ep, call, params, listKey){
+  let items=[], page=1, total=1;
   do {
-    const data = await callOmie(OMIE, key, secret, endpoint, call,
-      {...baseParams, pagina:page, registros_por_pagina:500});
-    // Defensive: handle different response shapes
-    let chunk = data[listKey];
-    if(!chunk){
-      // Try to find the first array in the response
-      const arr = Object.values(data).find(v=>Array.isArray(v));
-      chunk = arr || [];
-      if(arr) console.warn(`[${call}] key '${listKey}' not found, used first array key`);
+    const d = await callOmie(OMIE, key, secret, ep, call, {...params, pagina:page, registros_por_pagina:500});
+    // Aceita resposta em qualquer formato de array
+    let chunk = d[listKey];
+    if(!Array.isArray(chunk)){
+      const found = Object.values(d).find(v=>Array.isArray(v));
+      chunk = found || [];
+      if(found) console.info(`[${call}] chave '${listKey}' ausente; usando array encontrado (${found.length} itens)`);
     }
     items = items.concat(chunk);
-    totalPages = data.total_de_paginas || 1;
+    total = d.total_de_paginas || 1;
     page++;
-  } while(page <= totalPages);
+  } while(page<=total);
   return items;
 }
 
-// ── Bank balance via conta corrente ──
-async function fetchSaldoBanco(key, secret){
-  try {
-    const data = await callOmie(OMIE_GERAL, key, secret, 'contacorrente', 'ListarContasCorrentes', {
-      pagina:1, registros_por_pagina:50, apenas_importado_api:'N'
-    });
-    const contas = data.ListarContasCorrentes || data.conta_corrente_cadastro || data.cadastros || [];
-    const saldo = contas.reduce((s,c)=>{
-      const v = parseFloat(
-        c.saldo_atual ?? c.saldo ?? c.nSaldoAtual ??
-        (c.info_conta_corrente||{}).saldo_atual ?? 0
-      );
-      return s + (isNaN(v)?0:v);
+async function fetchSaldo(key, secret){
+  try{
+    const d = await callOmie(OMIE_GRL, key, secret, 'contacorrente', 'ListarContasCorrentes',
+      {pagina:1, registros_por_pagina:50, apenas_importado_api:'N'});
+    const contas = d.ListarContasCorrentes || d.conta_corrente_cadastro || d.cadastros
+                || Object.values(d).find(v=>Array.isArray(v)) || [];
+    const total = contas.reduce((s,c)=>{
+      const f = c.saldo_atual ?? c.saldo ?? c.nSaldoAtual
+             ?? (c.info_conta_corrente||{}).saldo_atual
+             ?? (c.dados_bancarios||{}).saldo_atual ?? 0;
+      return s + (isNaN(+f)?0:+f);
     },0);
-    console.log(`[saldo banco] ${contas.length} contas, total: R$${fmtCur(saldo)}`);
-    return saldo;
-  } catch(e){
-    console.warn('Não foi possível buscar saldo bancário:', e.message);
-    return 0;
-  }
+    console.log(`[saldo ${key.slice(-5)}] ${contas.length} contas → R$${fmtCur(total)}`);
+    return total;
+  }catch(e){ console.warn('saldo banco falhou:',e.message); return 0; }
 }
 
-// ── Extract record fields ──
+// ── Extract fields — tolerante a vários formatos Omie ──
 function exRec(raw){
-  const c  = raw.cabecalho || raw;
-  const st = raw.status_titulo;
-  const cl = raw.clientes_documento || raw.det_recebimento || {};
+  const c=raw.cabecalho||raw, st=raw.status_titulo, cl=raw.clientes_documento||{};
   return {
-    venc:    c.data_vencimento  || raw.data_vencimento  || '',
-    valor:   parseFloat(c.valor_documento  ?? raw.valor_documento  ?? 0),
-    saldo:   parseFloat(c.valor_saldo      ?? raw.valor_saldo      ?? c.valor_documento ?? raw.valor_documento ?? 0),
-    status:  typeof st==='object' ? (st.codigo_status||'ABERTO') : (st||'ABERTO'),
-    nome:    cl.nome_fantasia || c.nome_cliente || raw.nome_fantasia || raw.razao_social || '—',
-    doc:     c.numero_documento || raw.numero_documento || String(c.codigo_lancamento_omie||raw.codigo_lancamento_omie||'—'),
+    venc:  c.data_vencimento||raw.data_vencimento||'',
+    saldo: +( c.valor_saldo??raw.valor_saldo??c.valor_documento??raw.valor_documento??0 ),
+    valor: +( c.valor_documento??raw.valor_documento??0 ),
+    status:typeof st==='object'?(st.codigo_status||'ABERTO'):(st||'ABERTO'),
+    nome:  cl.nome_fantasia||c.nome_cliente||raw.nome_fantasia||raw.razao_social||'—',
+    doc:   c.numero_documento||raw.numero_documento||String(c.codigo_lancamento_omie||raw.codigo_lancamento_omie||'—'),
   };
 }
 function exPag(raw){
-  const c  = raw.cabecalho || raw;
-  const st = raw.status_titulo;
-  const fn = raw.fornecedor_documento || {};
+  const c=raw.cabecalho||raw, st=raw.status_titulo, fn=raw.fornecedor_documento||{};
   return {
-    venc:   c.data_vencimento  || raw.data_vencimento  || '',
-    valor:  parseFloat(c.valor_documento  ?? raw.valor_documento  ?? 0),
-    saldo:  parseFloat(c.valor_saldo      ?? raw.valor_saldo      ?? c.valor_documento ?? raw.valor_documento ?? 0),
-    status: typeof st==='object' ? (st.codigo_status||'ABERTO') : (st||'ABERTO'),
-    nome:   fn.nome_fantasia || c.nome_fornecedor || raw.nome_fantasia || raw.razao_social || '—',
-    doc:    c.numero_documento || raw.numero_documento || String(c.codigo_lancamento_omie||raw.codigo_lancamento_omie||'—'),
+    venc:  c.data_vencimento||raw.data_vencimento||'',
+    saldo: +( c.valor_saldo??raw.valor_saldo??c.valor_documento??raw.valor_documento??0 ),
+    valor: +( c.valor_documento??raw.valor_documento??0 ),
+    status:typeof st==='object'?(st.codigo_status||'ABERTO'):(st||'ABERTO'),
+    nome:  fn.nome_fantasia||c.nome_fornecedor||raw.nome_fornecedor||raw.nome_fantasia||raw.razao_social||'—',
+    doc:   c.numero_documento||raw.numero_documento||String(c.codigo_lancamento_omie||raw.codigo_lancamento_omie||'—'),
   };
 }
 
-// ── Monthly aggregation ──
-function byMonth(receber, pagar){
+// ── Aggregations ──
+function byMonth(rec, pag){
   const m = Array.from({length:12},(_,i)=>({month:i,receber:0,pagar:0}));
-  receber.forEach(r=>{ const mo=omieMonth(r.venc); if(mo>=0) m[mo].receber+=r.saldo; });
-  pagar.forEach(p=>  { const mo=omieMonth(p.venc); if(mo>=0) m[mo].pagar  +=p.saldo; });
+  rec.forEach(r=>{ const mo=omieMonth(r.venc); if(mo>=0) m[mo].receber+=r.saldo; });
+  pag.forEach(p=>{ const mo=omieMonth(p.venc); if(mo>=0) m[mo].pagar  +=p.saldo; });
   return m;
 }
 
-// ── Running balance + antecipação calculation ──
-function calcAnte(monthly, startBalance){
-  let run = startBalance||0, min=run, minMon=-1;
-  const running = monthly.map((m,i)=>{
-    run += m.receber - m.pagar;
-    if(run<min){ min=run; minMon=i; }
-    return run;
+// Build day-by-day map for ALL companies combined
+function buildDayMap(month/* 0-based */){
+  const map = {}; // key: 'DD/MM/YYYY'
+  const yr = 2026;
+  Object.values(allData).forEach(d=>{
+    (d.receber||[]).forEach(r=>{
+      if(!r.venc) return;
+      if(omieMonth(r.venc)!==month) return;
+      if(!map[r.venc]) map[r.venc]={receber:0,pagar:0,recCount:0,pagCount:0};
+      map[r.venc].receber += r.saldo; map[r.venc].recCount++;
+    });
+    (d.pagar||[]).forEach(p=>{
+      if(!p.venc) return;
+      if(omieMonth(p.venc)!==month) return;
+      if(!map[p.venc]) map[p.venc]={receber:0,pagar:0,recCount:0,pagCount:0};
+      map[p.venc].pagar += p.saldo; map[p.venc].pagCount++;
+    });
   });
-  const needed = min<0 ? Math.abs(min) : 0;
-  return { needed, minMon, minBalance:min, running };
+  // Fill all days of month (even empty)
+  const daysInMonth = new Date(yr, month+1, 0).getDate();
+  for(let d=1; d<=daysInMonth; d++){
+    const dd = String(d).padStart(2,'0');
+    const mm = String(month+1).padStart(2,'0');
+    const key = `${dd}/${mm}/${yr}`;
+    if(!map[key]) map[key]={receber:0,pagar:0,recCount:0,pagCount:0};
+  }
+  return Object.entries(map)
+    .map(([date,v])=>({date,...v}))
+    .sort((a,b)=>omieToTs(a.date)-omieToTs(b.date));
+}
+
+// ── Weekly breakdown ──
+function buildWeeks(month){
+  const yr=2026;
+  const daysInMonth = new Date(yr, month+1, 0).getDate();
+  const weeks=[];
+  let wNum=1, wStart=1;
+  while(wStart<=daysInMonth){
+    const wEnd = Math.min(wStart+6, daysInMonth);
+    const days=[];
+    for(let d=wStart;d<=wEnd;d++) days.push(d);
+    weeks.push({num:wNum, start:wStart, end:wEnd, days, receber:0, pagar:0});
+    wNum++; wStart=wEnd+1;
+  }
+  const dayMap = buildDayMap(month);
+  dayMap.forEach(({date,receber,pagar})=>{
+    const d = +date.split('/')[0];
+    const w = weeks.find(w=>d>=w.start&&d<=w.end);
+    if(w){ w.receber+=receber; w.pagar+=pagar; }
+  });
+  return weeks;
+}
+
+// ── Render Weekly Card ──
+function renderWeekly(month){
+  const weeks = buildWeeks(month);
+  const yr=2026, mm=String(month+1).padStart(2,'0');
+  const maxRec = Math.max(...weeks.map(w=>w.receber),1);
+  const maxPag = Math.max(...weeks.map(w=>w.pagar),1);
+  const bestRecIdx = weeks.reduce((bi,w,i)=>w.receber>weeks[bi].receber?i:bi,0);
+  const bestPagIdx = weeks.reduce((bi,w,i)=>w.pagar  >weeks[bi].pagar  ?i:bi,0);
+
+  document.getElementById('weekly-title-text').textContent =
+    `Semanas de ${MONTHS_PT[month]} — Receita e Despesa por Semana`;
+
+  document.getElementById('week-grid').innerHTML = weeks.map((w,i)=>{
+    const saldo = w.receber-w.pagar;
+    const isBestRec = i===bestRecIdx && w.receber>0;
+    const isBestPag = i===bestPagIdx && w.pagar>0;
+    const cls = isBestRec?'best-rec':isBestPag?'best-pag':'';
+    const dd1=String(w.start).padStart(2,'0'), dd2=String(w.end).padStart(2,'0');
+    const wD1 = new Date(yr,month,w.start), wD2 = new Date(yr,month,w.end);
+    const pRec = Math.round(w.receber/maxRec*100);
+    const pPag = Math.round(w.pagar  /maxPag*100);
+    return `<div class="week-item ${cls}">
+      ${isBestRec?'<span class="week-badge week-badge-rec">▲ Maior receita</span>':''}
+      ${isBestPag?'<span class="week-badge week-badge-pag">▼ Maior despesa</span>':''}
+      <div class="week-num">Semana ${w.num}</div>
+      <div class="week-dates">${DAYS_PT[wD1.getDay()]} ${dd1}/${mm} → ${DAYS_PT[wD2.getDay()]} ${dd2}/${mm}</div>
+      <div class="week-rec">▲ R$ ${fmtCur(w.receber)}</div>
+      <div class="week-bar-rec" style="width:${pRec}%"></div>
+      <div class="week-pag" style="margin-top:6px">▼ R$ ${fmtCur(w.pagar)}</div>
+      <div class="week-bar-pag" style="width:${pPag}%"></div>
+      <div class="week-saldo ${saldo>=0?'saldo-pos':'saldo-neg'}">
+        ${saldo>=0?'Líquido: +R$ ':'Líquido: −R$ '}${fmtCur(Math.abs(saldo))}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// ── Render Daily Table ──
+function renderDailyTable(month, startBalance){
+  const rows = buildDayMap(month);
+  const yr=2026;
+  const todayTs = Date.now();
+  let running = startBalance||0;
+  const maxVal = Math.max(...rows.map(r=>Math.max(r.receber,r.pagar)),1);
+
+  document.getElementById('daily-title').textContent =
+    `Fluxo Diário — ${MONTHS_PT[month]} de 2026 (Consolidado 3 empresas)`;
+
+  const html = rows.map(r=>{
+    const dt = omieDay(r.date);
+    if(!dt) return '';
+    const dow = dt.getDay();
+    const isWeekend = dow===0||dow===6;
+    const isToday   = omieToTs(r.date)===new Date(yr,month,dt.getDate()).setHours(0,0,0,0);
+    const liquido   = r.receber - r.pagar;
+    running += liquido;
+    const pRec = Math.round(r.receber/maxVal*90);
+    const pPag = Math.round(r.pagar  /maxVal*90);
+    const rowClass = isToday?'day-row-today':isWeekend?'day-row-weekend':'';
+    const hasData = r.receber>0||r.pagar>0;
+    return `<tr class="${rowClass}" ${!hasData?'style="opacity:.45"':''}>
+      <td class="day-row-date">${r.date.slice(0,5)}</td>
+      <td style="color:#718096">${DAYS_PT[dow]}</td>
+      <td style="text-align:right;color:#276749;font-weight:${r.receber>0?'700':'400'}">
+        ${r.receber>0?'R$ '+fmtCur(r.receber):'—'}</td>
+      <td style="text-align:right;color:#c53030;font-weight:${r.pagar>0?'700':'400'}">
+        ${r.pagar>0?'R$ '+fmtCur(r.pagar):'—'}</td>
+      <td style="text-align:right" class="${liquido>0?'saldo-pos':liquido<0?'saldo-neg':'saldo-zero'}">
+        ${liquido!==0?(liquido>0?'+':'-')+'R$ '+fmtCur(Math.abs(liquido)):'—'}</td>
+      <td style="text-align:right" class="${running>=0?'saldo-pos':'saldo-neg'}">
+        R$ ${fmtCur(running)}</td>
+      <td class="bar-cell">
+        ${r.receber>0?`<div title="Entrada" style="display:flex;align-items:center;gap:3px;margin-bottom:2px">
+          <span style="font-size:9px;color:#276749;width:10px">▲</span>
+          <span class="mini-bar" style="width:${pRec}px;background:#2f855a"></span>
+        </div>`:''}
+        ${r.pagar>0?`<div title="Saída" style="display:flex;align-items:center;gap:3px">
+          <span style="font-size:9px;color:#c53030;width:10px">▼</span>
+          <span class="mini-bar" style="width:${pPag}px;background:#c53030"></span>
+        </div>`:''}
+      </td>
+      <td style="color:#718096;font-size:11px">
+        ${r.recCount>0?`<span style="color:#276749">+${r.recCount}</span>`:''}
+        ${r.pagCount>0?`<span style="color:#c53030;margin-left:4px">-${r.pagCount}</span>`:''}
+      </td>
+    </tr>`;
+  }).join('');
+
+  document.getElementById('daily-tbody').innerHTML = html ||
+    `<tr><td colspan="8" style="text-align:center;padding:30px;color:#718096">Sem dados para ${MONTHS_PT[month]}</td></tr>`;
+}
+
+// ── Month nav ──
+function buildMonthNav(){
+  const sel = document.getElementById('month-select');
+  sel.innerHTML = MONTHS_PT.map((m,i)=>`<option value="${i}">${m} 2026</option>`).join('');
+  sel.value = selectedMonth;
+
+  const nav = document.getElementById('month-nav');
+  nav.innerHTML = MONTHS_SH.map((m,i)=>
+    `<button onclick="onMonthChange(${i})" data-mo="${i}" class="${i===selectedMonth?'active-month':''}">${m}</button>`
+  ).join('');
+}
+
+function onMonthChange(mo){
+  selectedMonth = +mo;
+  document.getElementById('month-select').value = mo;
+  document.querySelectorAll('#month-nav button').forEach(b=>{
+    b.classList.toggle('active-month', +b.dataset.mo===+mo);
+  });
+  const totBanco = Object.values(allData).reduce((s,d)=>s+(d.saldoBanco||0),0);
+  renderWeekly(+mo);
+  renderDailyTable(+mo, totBanco);
+  document.getElementById('drill-info').textContent =
+    `${MONTHS_PT[+mo]} / 2026`;
+}
+
+// ── Antecipação calc ──
+function calcAnte(monthly, startBal){
+  let run=startBal||0, min=run, minMon=-1;
+  const running = monthly.map((m,i)=>{ run+=m.receber-m.pagar; if(run<min){min=run;minMon=i;} return run; });
+  return {needed:min<0?Math.abs(min):0, minMon, minBalance:min, running};
 }
 
 // ── Chart ──
-function renderChart(id, monthly, color, startBalance){
+function renderChart(id, monthly, color, startBal){
   if(charts[id]) charts[id].destroy();
-  const { running } = calcAnte(monthly, startBalance);
-  const withAnte = (() => {
-    const ante = calcAnte(monthly, startBalance).needed;
-    let r2 = (startBalance||0)+ante;
-    return monthly.map(m=>{ r2+=m.receber-m.pagar; return r2; });
-  })();
+  const {running} = calcAnte(monthly, startBal);
   const ctx = document.getElementById(id).getContext('2d');
   charts[id] = new Chart(ctx,{
     data:{
-      labels: MONTHS_PT,
+      labels:MONTHS_SH,
       datasets:[
-        { type:'bar', label:'Entradas', data:monthly.map(m=>m.receber),
-          backgroundColor:'rgba(39,103,73,.65)', borderColor:'#2f855a', borderWidth:1 },
-        { type:'bar', label:'Saídas', data:monthly.map(m=>-m.pagar),
-          backgroundColor:'rgba(197,48,48,.55)', borderColor:'#c53030', borderWidth:1 },
-        { type:'line', label:'Saldo Acumulado', data:running,
-          borderColor:color||'#1a6fc4', backgroundColor:'transparent',
-          borderWidth:2.5, pointRadius:3, tension:.3, yAxisID:'y2' },
-        { type:'line', label:'Com Antecipação', data:withAnte,
-          borderColor:'#d69e2e', backgroundColor:'transparent',
-          borderWidth:1.5, borderDash:[5,4], pointRadius:0, tension:.3, yAxisID:'y2' },
+        {type:'bar', label:'Entradas', data:monthly.map(m=>m.receber), backgroundColor:'rgba(39,103,73,.6)', borderColor:'#2f855a', borderWidth:1},
+        {type:'bar', label:'Saídas',   data:monthly.map(m=>-m.pagar), backgroundColor:'rgba(197,48,48,.5)', borderColor:'#c53030',  borderWidth:1},
+        {type:'line',label:'Saldo Acum.', data:running, borderColor:color||'#1a6fc4', backgroundColor:'transparent', borderWidth:2.5, pointRadius:3, tension:.3, yAxisID:'y2'},
       ]
     },
     options:{
@@ -530,9 +617,7 @@ function renderChart(id, monthly, color, startBalance){
       interaction:{mode:'index',intersect:false},
       plugins:{
         legend:{labels:{color:'#4a5568',font:{size:11}}},
-        tooltip:{callbacks:{label(c){
-          return ` ${c.dataset.label}: R$ ${fmtCur(Math.abs(c.parsed.y))}`;
-        }}}
+        tooltip:{callbacks:{label:c=>` ${c.dataset.label}: R$ ${fmtCur(Math.abs(c.parsed.y))}`}}
       },
       scales:{
         x:{ticks:{color:'#718096',font:{size:11}},grid:{color:'#f0f4f8'}},
@@ -543,242 +628,186 @@ function renderChart(id, monthly, color, startBalance){
   });
 }
 
-// ── Populate tables ──
-function fillTable(bodyId, ctId, rows, tipo){
-  const now = Date.now();
+// ── Fill tables ──
+function fillTable(bodyId, ctId, rows){
+  const nowTs = Date.now();
   const sorted = [...rows].sort((a,b)=>omieToTs(a.venc)-omieToTs(b.venc));
   if(ctId) document.getElementById(ctId).textContent = rows.length+' registros';
-  document.getElementById(bodyId).innerHTML = sorted.length ? sorted.map(r=>{
-    let sc = r.status.toLowerCase();
-    if(sc==='aberto' && omieToTs(r.venc)<now) sc='vencido';
-    return `<tr>
-      <td style="white-space:nowrap">${r.venc||'—'}</td>
-      <td style="max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="${r.nome}">${r.nome}</td>
-      <td style="color:#718096;font-size:11px">${r.doc}</td>
-      <td style="text-align:right;font-variant-numeric:tabular-nums;font-weight:600">R$ ${fmtCur(r.saldo)}</td>
-      <td><span class="badge b-${sc}">${sc.toUpperCase()}</span></td>
-    </tr>`;
-  }).join('')
-  : `<tr><td colspan="5" style="text-align:center;padding:24px;color:#718096">Nenhum registro no período</td></tr>`;
+  document.getElementById(bodyId).innerHTML = sorted.length
+    ? sorted.map(r=>{
+        let sc=r.status.toLowerCase();
+        if(sc==='aberto'&&omieToTs(r.venc)<nowTs) sc='vencido';
+        return `<tr>
+          <td style="white-space:nowrap">${r.venc||'—'}</td>
+          <td style="max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="${r.nome}">${r.nome}</td>
+          <td style="color:#718096;font-size:11px">${r.doc}</td>
+          <td style="text-align:right;font-weight:600">R$ ${fmtCur(r.saldo)}</td>
+          <td><span class="badge b-${sc}">${sc.toUpperCase()}</span></td>
+        </tr>`;
+      }).join('')
+    : `<tr><td colspan="5" style="text-align:center;padding:24px;color:#718096">Sem registros</td></tr>`;
 }
 
 // ── Render company ──
 function renderCompany(id, receber, pagar, saldoBanco){
-  const c = COMPANIES[id];
+  const c=COMPANIES[id];
   const monthly = byMonth(receber, pagar);
   const ante = calcAnte(monthly, saldoBanco);
   const totRec = receber.reduce((s,r)=>s+r.saldo,0);
   const totPag = pagar.reduce((s,p)=>s+p.saldo,0);
-  const saldoProj = saldoBanco + totRec - totPag;
+  const saldoProj = saldoBanco+totRec-totPag;
 
-  // KPIs
-  document.getElementById(id+'-kpis').innerHTML = `
-    <div class="kpi good">
-      <div class="kpi-lbl">Saldo Banco Atual</div>
-      <div class="kpi-val good">R$ ${fmtCur(saldoBanco)}</div>
-      <div class="kpi-sub">Contas correntes Omie</div>
-    </div>
-    <div class="kpi">
-      <div class="kpi-lbl">Total a Receber (ano)</div>
-      <div class="kpi-val" style="color:#276749">R$ ${fmtCur(totRec)}</div>
-      <div class="kpi-sub">${receber.length} títulos em aberto</div>
-    </div>
-    <div class="kpi danger">
-      <div class="kpi-lbl">Total a Pagar (ano)</div>
-      <div class="kpi-val danger">R$ ${fmtCur(totPag)}</div>
-      <div class="kpi-sub">${pagar.length} títulos em aberto</div>
-    </div>
-    <div class="kpi ${saldoProj>=0?'good':'danger'}">
-      <div class="kpi-lbl">Saldo Projetado Final</div>
-      <div class="kpi-val ${saldoProj>=0?'good':'danger'}">R$ ${fmtCur(saldoProj)}</div>
-      <div class="kpi-sub">Banco + Receber − Pagar</div>
-    </div>
-    <div class="kpi purple">
-      <div class="kpi-lbl">Antecipação Necessária</div>
-      <div class="kpi-val" style="color:${ante.needed>0?'#6b46c1':'#276749'}">
-        ${ante.needed>0?'R$ '+fmtCur(ante.needed):'Não necessária'}
-      </div>
-      <div class="kpi-sub">${ante.needed>0?'Déficit em '+MONTHS_PT[ante.minMon]+'/26':'Caixa sempre positivo'}</div>
-    </div>
+  document.getElementById(id+'-kpis').innerHTML=`
+    <div class="kpi good"><div class="kpi-lbl">Saldo Banco</div><div class="kpi-val good">R$ ${fmtCur(saldoBanco)}</div><div class="kpi-sub">Contas correntes Omie</div></div>
+    <div class="kpi"><div class="kpi-lbl">Total a Receber</div><div class="kpi-val" style="color:#276749">R$ ${fmtCur(totRec)}</div><div class="kpi-sub">${receber.length} títulos</div></div>
+    <div class="kpi danger"><div class="kpi-lbl">Total a Pagar</div><div class="kpi-val danger">R$ ${fmtCur(totPag)}</div><div class="kpi-sub">${pagar.length} títulos</div></div>
+    <div class="kpi ${saldoProj>=0?'good':'danger'}"><div class="kpi-lbl">Saldo Projetado</div><div class="kpi-val ${saldoProj>=0?'good':'danger'}">R$ ${fmtCur(saldoProj)}</div><div class="kpi-sub">Banco + Receber − Pagar</div></div>
+    <div class="kpi purple"><div class="kpi-lbl">Antecipação Necessária</div>
+      <div class="kpi-val" style="color:${ante.needed>0?'#6b46c1':'#276749'}">${ante.needed>0?'R$ '+fmtCur(ante.needed):'Não necessária'}</div>
+      <div class="kpi-sub">${ante.needed>0?'Déficit em '+MONTHS_SH[ante.minMon]+'/26':'Caixa sempre positivo'}</div></div>
   `;
-
-  document.getElementById(id+'-period').textContent =
-    `Jan/2026 a Dez/2026 · Saldo banco: R$ ${fmtCur(saldoBanco)}`;
-
+  document.getElementById(id+'-period').textContent=`Jan/2026 a Dez/2026 · Saldo banco: R$ ${fmtCur(saldoBanco)}`;
   renderChart('chart'+id.charAt(0).toUpperCase()+id.slice(1), monthly, c.color, saldoBanco);
-  fillTable(id+'-rec-body', id+'-rec-ct', receber, 'receber');
-  fillTable(id+'-pag-body', id+'-pag-ct', pagar,   'pagar');
-
+  fillTable(id+'-rec-body', id+'-rec-ct', receber);
+  fillTable(id+'-pag-body', id+'-pag-ct', pagar);
   document.getElementById(id+'-loading').style.display='none';
   document.getElementById(id+'-content').style.display='block';
 
-  return { totRec, totPag, saldoBanco, saldoProj, ante, monthly };
+  return {totRec, totPag, saldoBanco, saldoProj, ante, monthly, receber, pagar};
 }
 
 // ── Render Resumo ──
 function renderResumo(){
-  const ids = Object.keys(COMPANIES);
-  let totRec=0, totPag=0, totBanco=0, totAnte=0;
-  const rows=[], mergedMonthly = Array.from({length:12},(_,i)=>({month:i,receber:0,pagar:0}));
+  const ids=Object.keys(COMPANIES);
+  let tRec=0, tPag=0, tBanco=0, tAnte=0;
+  const merged=Array.from({length:12},(_,i)=>({month:i,receber:0,pagar:0}));
 
   ids.forEach(id=>{
     if(!allData[id]) return;
-    const d = allData[id];
-    totRec  += d.totRec;
-    totPag  += d.totPag;
-    totBanco+= d.saldoBanco;
-    totAnte += d.ante.needed;
-    d.monthly.forEach((m,i)=>{ mergedMonthly[i].receber+=m.receber; mergedMonthly[i].pagar+=m.pagar; });
-    rows.push(d);
+    const d=allData[id];
+    tRec+=d.totRec; tPag+=d.totPag; tBanco+=d.saldoBanco; tAnte+=d.ante.needed;
+    d.monthly.forEach((m,i)=>{ merged[i].receber+=m.receber; merged[i].pagar+=m.pagar; });
   });
+  const tProj=tBanco+tRec-tPag;
 
-  const totProj = totBanco + totRec - totPag;
-
-  document.getElementById('resumo-kpis').innerHTML = `
-    <div class="kpi good">
-      <div class="kpi-lbl">Saldo Banco Consolidado</div>
-      <div class="kpi-val good">R$ ${fmtCur(totBanco)}</div>
-      <div class="kpi-sub">3 empresas somadas</div>
-    </div>
-    <div class="kpi">
-      <div class="kpi-lbl">Total a Receber</div>
-      <div class="kpi-val" style="color:#276749">R$ ${fmtCur(totRec)}</div>
-      <div class="kpi-sub">Jan–Dez 2026</div>
-    </div>
-    <div class="kpi danger">
-      <div class="kpi-lbl">Total a Pagar</div>
-      <div class="kpi-val danger">R$ ${fmtCur(totPag)}</div>
-      <div class="kpi-sub">Jan–Dez 2026</div>
-    </div>
-    <div class="kpi ${totProj>=0?'good':'danger'}">
-      <div class="kpi-lbl">Saldo Projetado Final</div>
-      <div class="kpi-val ${totProj>=0?'good':'danger'}">R$ ${fmtCur(totProj)}</div>
-      <div class="kpi-sub">Banco + Receber − Pagar</div>
-    </div>
-    <div class="kpi purple">
-      <div class="kpi-lbl">Antecipação Total</div>
-      <div class="kpi-val" style="color:${totAnte>0?'#6b46c1':'#276749'}">
-        ${totAnte>0?'R$ '+fmtCur(totAnte):'Não necessária'}
-      </div>
-      <div class="kpi-sub">Para manter caixa positivo</div>
-    </div>
+  document.getElementById('resumo-kpis').innerHTML=`
+    <div class="kpi good"><div class="kpi-lbl">Saldo Banco Consolidado</div><div class="kpi-val good">R$ ${fmtCur(tBanco)}</div><div class="kpi-sub">3 empresas</div></div>
+    <div class="kpi"><div class="kpi-lbl">Total a Receber (2026)</div><div class="kpi-val" style="color:#276749">R$ ${fmtCur(tRec)}</div><div class="kpi-sub">Jan a Dez</div></div>
+    <div class="kpi danger"><div class="kpi-lbl">Total a Pagar (2026)</div><div class="kpi-val danger">R$ ${fmtCur(tPag)}</div><div class="kpi-sub">Jan a Dez</div></div>
+    <div class="kpi ${tProj>=0?'good':'danger'}"><div class="kpi-lbl">Saldo Projetado Final</div><div class="kpi-val ${tProj>=0?'good':'danger'}">R$ ${fmtCur(tProj)}</div><div class="kpi-sub">Banco + Receber − Pagar</div></div>
   `;
 
-  document.getElementById('resumo-subtitle').textContent =
-    `Fluxo de Caixa Anual 2026 · Saldo banco consolidado: R$ ${fmtCur(totBanco)}`;
+  document.getElementById('resumo-subtitle').textContent=
+    `Fluxo Anual 2026 · Banco consolidado: R$ ${fmtCur(tBanco)}`;
 
-  renderChart('chartResumo', mergedMonthly, '#1a6fc4', totBanco);
+  // Ante card consolidado
+  const anteHtml = ids.map(id=>{
+    if(!allData[id])return''; const d=allData[id]; const c=COMPANIES[id];
+    return `<div class="ante-item">
+      <div class="ante-lbl" style="color:${c.color}">${c.name}</div>
+      ${d.ante.needed>0
+        ?`<div class="ante-val">R$ ${fmtCur(d.ante.needed)}</div><div class="ante-date">Déficit em ${MONTHS_SH[d.ante.minMon]}/26</div>`
+        :`<div class="ante-ok">Caixa positivo ✓</div>`}
+    </div>`;
+  }).join('');
+  document.getElementById('ante-card-consolidado').innerHTML=`
+    <div class="ante-card-title">⚡ Antecipação necessária para manter caixa positivo</div>
+    <div class="ante-grid">
+      ${anteHtml}
+      <div class="ante-item" style="border-left:1px solid rgba(255,255,255,.2);padding-left:20px">
+        <div class="ante-lbl" style="color:#c4b5fd">TOTAL GRUPO</div>
+        ${tAnte>0?`<div class="ante-val" style="font-size:24px">R$ ${fmtCur(tAnte)}</div>`
+                 :`<div class="ante-ok" style="font-size:20px">Grupo saudável ✓</div>`}
+      </div>
+    </div>`;
 
-  document.getElementById('resumo-tbody').innerHTML = ids.map(id=>{
-    if(!allData[id]) return '';
-    const d=allData[id]; const c=COMPANIES[id];
+  // Resumo table
+  document.getElementById('resumo-tbody').innerHTML=ids.map(id=>{
+    if(!allData[id])return''; const d=allData[id]; const c=COMPANIES[id];
     return `<tr>
       <td><span class="company-dot" style="background:${c.color}"></span>${c.name}</td>
-      <td style="text-align:right;color:#276749;font-weight:600">R$ ${fmtCur(d.saldoBanco)}</td>
+      <td style="text-align:right;color:#276749;font-weight:700">R$ ${fmtCur(d.saldoBanco)}</td>
       <td style="text-align:right;color:#276749">R$ ${fmtCur(d.totRec)}</td>
       <td style="text-align:right;color:#c53030">R$ ${fmtCur(d.totPag)}</td>
       <td style="text-align:right;font-weight:700;color:${d.saldoProj>=0?'#276749':'#c53030'}">R$ ${fmtCur(d.saldoProj)}</td>
-      <td style="text-align:right;color:${d.ante.minBalance<0?'#c53030':'#718096'}">
-        ${d.ante.minBalance<0?'R$ '+fmtCur(Math.abs(d.ante.minBalance)):'—'}</td>
       <td style="text-align:right;color:${d.ante.needed>0?'#6b46c1':'#276749'};font-weight:700">
-        ${d.ante.needed>0?'R$ '+fmtCur(d.ante.needed):'<span style="color:#276749">—</span>'}</td>
-      <td style="color:#718096">${d.ante.needed>0?MONTHS_PT[d.ante.minMon]+'/2026':'—'}</td>
+        ${d.ante.needed>0?'R$ '+fmtCur(d.ante.needed):'—'}</td>
+      <td style="color:#718096">${d.ante.needed>0?MONTHS_SH[d.ante.minMon]+'/2026':'—'}</td>
     </tr>`;
   }).join('');
+
+  renderChart('chartResumo', merged, '#1a6fc4', tBanco);
+
+  buildMonthNav();
+  renderWeekly(selectedMonth);
+  renderDailyTable(selectedMonth, tBanco);
 
   document.getElementById('resumo-loading').style.display='none';
   document.getElementById('resumo-content').style.display='block';
 
-  // Render antecipação tab
-  renderAnteTab(ids, totBanco, totAnte, mergedMonthly);
+  // Ante tab
+  renderAnteTab(ids, tBanco, tAnte, merged);
 }
 
-function renderAnteTab(ids, totBanco, totAnte, mergedMonthly){
-  // Ante card
+function renderAnteTab(ids, tBanco, tAnte, merged){
   const anteHtml = ids.map(id=>{
-    if(!allData[id]) return '';
-    const d=allData[id]; const c=COMPANIES[id];
+    if(!allData[id])return''; const d=allData[id]; const c=COMPANIES[id];
     return `<div class="ante-item">
       <div class="ante-lbl" style="color:${c.color}">${c.name}</div>
       ${d.ante.needed>0
-        ? `<div class="ante-val">R$ ${fmtCur(d.ante.needed)}</div>
-           <div class="ante-date">Pior mês: ${MONTHS_PT[d.ante.minMon]}/2026 | Saldo: R$ ${fmtCur(d.ante.minBalance)}</div>`
-        : `<div class="ante-ok">Caixa positivo ✓</div>`
-      }
+        ?`<div class="ante-val">R$ ${fmtCur(d.ante.needed)}</div><div class="ante-date">${MONTHS_PT[d.ante.minMon]}/2026 · saldo: R$ ${fmtCur(d.ante.minBalance)}</div>`
+        :`<div class="ante-ok">Caixa positivo ✓</div>`}
     </div>`;
   }).join('');
-  document.getElementById('ante-card-main').innerHTML = `
-    <div class="ante-card-title">⚡ Antecipação Necessária para Manter Caixa Positivo</div>
+  document.getElementById('ante-card-main').innerHTML=`
+    <div class="ante-card-title">⚡ Antecipação necessária para manter caixa positivo</div>
     <div class="ante-grid">
       ${anteHtml}
-      <div class="ante-item ante-total">
+      <div class="ante-item" style="border-left:1px solid rgba(255,255,255,.2);padding-left:20px">
         <div class="ante-lbl" style="color:#c4b5fd">TOTAL CONSOLIDADO</div>
-        ${totAnte>0
-          ? `<div class="ante-val" style="font-size:26px">R$ ${fmtCur(totAnte)}</div>
-             <div class="ante-date">Soma dos déficits individuais</div>`
-          : `<div class="ante-ok" style="font-size:20px">Grupo saudável ✓</div>`
-        }
+        ${tAnte>0?`<div class="ante-val" style="font-size:24px">R$ ${fmtCur(tAnte)}</div><div class="ante-date">Soma dos déficits individuais</div>`
+                 :`<div class="ante-ok" style="font-size:20px">Grupo saudável ✓</div>`}
       </div>
     </div>`;
 
-  // Ante detail cards
-  document.getElementById('ante-detail').innerHTML = ids.map(id=>{
-    if(!allData[id]) return '';
-    const d=allData[id]; const c=COMPANIES[id];
-    const cob = d.totRec>0 ? (d.ante.needed/d.totRec*100).toFixed(1) : 0;
+  document.getElementById('ante-detail').innerHTML=ids.map(id=>{
+    if(!allData[id])return''; const d=allData[id]; const c=COMPANIES[id];
+    const pct = d.totRec>0?(d.ante.needed/d.totRec*100).toFixed(1):0;
     return `<div class="kpi purple" style="border-top-color:${c.color}">
       <div class="kpi-lbl">${c.name}</div>
       <div class="kpi-val" style="color:${c.color};font-size:20px">${d.ante.needed>0?'R$ '+fmtCur(d.ante.needed):'Não necessária'}</div>
-      <div class="kpi-sub">${d.ante.needed>0?`${cob}% do recebível total · Déficit em ${MONTHS_PT[d.ante.minMon]}/2026`:'Saldo banco cobre os pagamentos'}</div>
+      <div class="kpi-sub">${d.ante.needed>0?`${pct}% do recebível · déficit em ${MONTHS_SH[d.ante.minMon]}/26`:'Saldo banco suficiente'}</div>
     </div>`;
   }).join('');
 
-  // Ante chart
-  if(charts['chartAnte']) charts['chartAnte'].destroy();
-  const anteAllMonthly = mergedMonthly;
-  const ante = calcAnte(anteAllMonthly, totBanco);
-  const withAnte = (() => {
-    let r = totBanco + ante.needed;
-    return anteAllMonthly.map(m=>{ r+=m.receber-m.pagar; return r; });
-  })();
-  const ctx = document.getElementById('chartAnte').getContext('2d');
-  charts['chartAnte'] = new Chart(ctx,{
-    data:{
-      labels:MONTHS_PT,
-      datasets:[
-        { type:'line', label:'Sem Antecipação', data:ante.running,
-          borderColor:'#c53030', backgroundColor:'rgba(197,48,48,.08)',
-          borderWidth:2.5, pointRadius:3, tension:.3, fill:true },
-        { type:'line', label:'Com Antecipação (R$'+fmtCur(ante.needed)+')',
-          data:withAnte, borderColor:'#276749', backgroundColor:'rgba(39,103,73,.08)',
-          borderWidth:2.5, pointRadius:3, tension:.3, fill:true },
-        { type:'line', label:'Linha zero', data:Array(12).fill(0),
-          borderColor:'#a0aec0', borderDash:[4,3], borderWidth:1, pointRadius:0 },
-      ]
-    },
-    options:{
-      responsive:true, maintainAspectRatio:false,
-      plugins:{legend:{labels:{color:'#4a5568',font:{size:11}}},
-        tooltip:{callbacks:{label:c=>` ${c.dataset.label}: R$ ${fmtCur(c.parsed.y)}`}}},
+  if(charts.chartAnte) charts.chartAnte.destroy();
+  const ante=calcAnte(merged, tBanco);
+  const withAnte=(()=>{ let r=tBanco+ante.needed; return merged.map(m=>{r+=m.receber-m.pagar;return r;}); })();
+  const ctx=document.getElementById('chartAnte').getContext('2d');
+  charts.chartAnte=new Chart(ctx,{
+    data:{labels:MONTHS_SH,datasets:[
+      {type:'line',label:'Sem antecipação',data:ante.running,borderColor:'#c53030',backgroundColor:'rgba(197,48,48,.07)',borderWidth:2.5,pointRadius:3,tension:.3,fill:true},
+      {type:'line',label:`Com antecipação (R$${fmtCur(ante.needed)})`,data:withAnte,borderColor:'#276749',backgroundColor:'rgba(39,103,73,.07)',borderWidth:2.5,pointRadius:3,tension:.3,fill:true},
+      {type:'line',label:'Linha zero',data:Array(12).fill(0),borderColor:'#a0aec0',borderDash:[4,3],borderWidth:1,pointRadius:0},
+    ]},
+    options:{responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{labels:{color:'#4a5568',font:{size:11}}},tooltip:{callbacks:{label:c=>` ${c.dataset.label}: R$ ${fmtCur(c.parsed.y)}`}}},
       scales:{
         x:{ticks:{color:'#718096',font:{size:11}},grid:{color:'#f0f4f8'}},
         y:{ticks:{color:'#718096',font:{size:10},callback:v=>'R$'+fmtCur(v)},grid:{color:'rgba(224,231,239,.6)'}}
       }
     }
   });
-
   document.getElementById('ante-loading').style.display='none';
   document.getElementById('ante-content').style.display='block';
 }
 
-// ── CSV Export ──
+// ── CSV ──
 function exportCSV(){
   const rows=[['Empresa','Tipo','Vencimento','Nome','Documento','Valor','Status']];
   Object.keys(allData).forEach(id=>{
-    const {receber,pagar} = allData[id]._raw || {};
-    if(!receber||!pagar) return;
-    receber.forEach(r=>rows.push([COMPANIES[id].name,'Receber',r.venc,r.nome,r.doc,r.saldo,r.status]));
-    pagar.forEach(p=>  rows.push([COMPANIES[id].name,'Pagar',  p.venc,p.nome,p.doc,p.saldo,p.status]));
+    (allData[id].receber||[]).forEach(r=>rows.push([COMPANIES[id].name,'Receber',r.venc,r.nome,r.doc,r.saldo,r.status]));
+    (allData[id].pagar  ||[]).forEach(p=>rows.push([COMPANIES[id].name,'Pagar',  p.venc,p.nome,p.doc,p.saldo,p.status]));
   });
   const csv=rows.map(r=>r.map(v=>'"'+String(v||'').replace(/"/g,'""')+'"').join(',')).join('\n');
   const a=document.createElement('a');
@@ -786,83 +815,71 @@ function exportCSV(){
   a.download='fluxo-caixa-icc-2026.csv'; a.click();
 }
 
-// ── Load all data ──
+// ── Main load ──
 async function loadAll(){
-  const btn=document.getElementById('btnLoad');
-  const status=document.getElementById('load-status');
+  const btn=document.getElementById('btnLoad'), st=document.getElementById('load-status');
   btn.disabled=true; btn.textContent='⏳ Carregando...';
   allData={};
 
-  const dFrom = document.getElementById('dateFrom').value;
-  const dTo   = document.getElementById('dateTo').value;
+  // ⚠️ SEM filtrar_por_status — buscamos tudo e filtramos em JS
+  // Isso garante que nenhum registro seja omitido por nome de status diferente do esperado
+  const params = {
+    filtrar_por_data_de: isoToOmie(document.getElementById('dateFrom').value),
+    filtrar_por_data_ate: isoToOmie(document.getElementById('dateTo').value),
+    filtrar_por_tipo_data: 'V',
+    apenas_importado_api: 'N',
+  };
 
-  // Reset views
   ['instituto','telecom','medical'].forEach(id=>{
     document.getElementById(id+'-loading').style.display='none';
     document.getElementById(id+'-content').style.display='none';
     document.getElementById(id+'-err').innerHTML='';
   });
-  document.getElementById('resumo-loading').style.display='flex';
-  document.getElementById('resumo-loading').innerHTML='<div class="spinner"></div><p>Carregando dados das 3 empresas...</p>';
+  const rl=document.getElementById('resumo-loading');
+  rl.style.display='flex'; rl.innerHTML='<div class="spinner"></div><p>Buscando dados das 3 empresas...</p>';
   document.getElementById('resumo-content').style.display='none';
   document.getElementById('ante-content').style.display='none';
 
-  const baseReceber = {
-    filtrar_por_data_de: isoToOmie(dFrom),
-    filtrar_por_data_ate: isoToOmie(dTo),
-    filtrar_por_tipo_data: 'V',
-    filtrar_por_status: 'ABERTO',
-    apenas_importado_api: 'N',
-  };
-  const basePagar = {...baseReceber};
+  await Promise.allSettled(Object.keys(COMPANIES).map(async id=>{
+    const c=COMPANIES[id];
+    document.getElementById(id+'-loading').style.display='flex';
+    st.textContent=`Carregando ${c.name}...`;
+    try{
+      const [rRaw, pRaw, saldo] = await Promise.all([
+        fetchPages(c.key, c.secret, 'contareceber', 'ListarContasReceber', params, 'conta_receber_cadastro'),
+        fetchPages(c.key, c.secret, 'contapagar',   'ListarContasPagar',   params, 'conta_pagar_cadastro'),
+        fetchSaldo(c.key, c.secret),
+      ]);
+      console.log(`[${id}] raw receber=${rRaw.length} pagar=${pRaw.length} saldo=${saldo}`);
+      if(rRaw.length) console.log(`[${id}] sample receber:`, JSON.stringify(rRaw[0]).slice(0,300));
+      if(pRaw.length) console.log(`[${id}] sample pagar:`,   JSON.stringify(pRaw[0]).slice(0,300));
 
-  const results = await Promise.allSettled(
-    Object.keys(COMPANIES).map(async id=>{
-      const c = COMPANIES[id];
-      document.getElementById(id+'-loading').style.display='flex';
-      status.textContent = `Carregando ${c.name}...`;
-      try {
-        const [receberRaw, pagarRaw, saldoBanco] = await Promise.all([
-          fetchPages(c.key, c.secret, 'contareceber', 'ListarContasReceber', baseReceber, 'conta_receber_cadastro'),
-          fetchPages(c.key, c.secret, 'contapagar',   'ListarContasPagar',   basePagar,   'conta_pagar_cadastro'),
-          fetchSaldoBanco(c.key, c.secret),
-        ]);
+      const receber = rRaw.map(exRec).filter(r=>r.venc);
+      const pagar   = pRaw.map(exPag).filter(p=>p.venc);
+      console.log(`[${id}] filtrado receber=${receber.length} pagar=${pagar.length}`);
 
-        console.log(`[${id}] receber raw: ${receberRaw.length}, pagar raw: ${pagarRaw.length}, banco: ${saldoBanco}`);
-
-        const receber = receberRaw.map(exRec).filter(r=>r.venc);
-        const pagar   = pagarRaw.map(exPag).filter(p=>p.venc);
-
-        console.log(`[${id}] receber filtrado: ${receber.length}, pagar filtrado: ${pagar.length}`);
-
-        const result = renderCompany(id, receber, pagar, saldoBanco);
-        result._raw = {receber, pagar};
-        allData[id] = result;
-        return {id, ok:true};
-      } catch(err){
-        console.error(`[${id}]`, err);
-        document.getElementById(id+'-loading').style.display='none';
-        document.getElementById(id+'-err').innerHTML =
-          `<div class="err-box">⚠️ Erro ao carregar ${c.name}:\n${err.message}\n\nVerifique as credenciais e a conectividade com a API Omie.</div>`;
-        return {id, ok:false, err};
-      }
-    })
-  );
+      allData[id] = renderCompany(id, receber, pagar, saldo);
+    }catch(e){
+      console.error(`[${id}]`, e);
+      document.getElementById(id+'-loading').style.display='none';
+      document.getElementById(id+'-err').innerHTML=`<div class="err-box">⚠️ Erro — ${c.name}:\n${e.message}</div>`;
+    }
+  }));
 
   renderResumo();
 
-  const now = new Date();
-  document.getElementById('lastUpdate').textContent =
+  const now=new Date();
+  document.getElementById('lastUpdate').textContent=
     now.toLocaleDateString('pt-BR')+', '+now.toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
-
-  status.textContent = results.filter(r=>r.value?.ok).length+'/3 empresas carregadas';
+  st.textContent=Object.keys(allData).length+'/3 empresas carregadas';
   btn.disabled=false; btn.textContent='🔄 Atualizar';
 }
 
 // ── Init ──
-(function(){
-  document.getElementById('dateFrom').value = '2026-01-01';
-  document.getElementById('dateTo').value   = '2026-12-31';
+(()=>{
+  document.getElementById('dateFrom').value='2026-01-01';
+  document.getElementById('dateTo').value  ='2026-12-31';
+  selectedMonth = new Date().getMonth();
 })();
 </script>
 </body>
