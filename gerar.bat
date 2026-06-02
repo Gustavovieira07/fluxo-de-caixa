@@ -1,3 +1,3 @@
 @echo off
-title ICC - Gerando Fluxo de Caixa...
-powershell -ExecutionPolicy Bypass -File "%~dp0gerar.ps1"
+title ICC - Fluxo de Caixa (atualiza a cada 5 min)
+powershell -ExecutionPolicy Bypass -File "%~dp0gerar.ps1" -Loop -Intervalo 300
