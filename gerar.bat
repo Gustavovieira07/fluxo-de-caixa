@@ -1,0 +1,3 @@
+@echo off
+title ICC - Gerando Fluxo de Caixa...
+powershell -ExecutionPolicy Bypass -File "%~dp0gerar.ps1"
