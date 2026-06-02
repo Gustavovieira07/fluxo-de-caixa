@@ -28,6 +28,16 @@
     .btn-primary:disabled{background:#9db8d4;cursor:not-allowed}
     .btn-sec{background:#fff;border:1px solid #c8d6e5;border-radius:6px;padding:5px 14px;color:#5a7186;font-size:12px;cursor:pointer;transition:all .15s}
     .btn-sec:hover{border-color:#1a6fc4;color:#1a6fc4}
+    .btn-diag{background:#7c3aed;border:none;border-radius:6px;padding:6px 14px;color:#fff;font-size:12px;font-weight:700;cursor:pointer}
+    .btn-diag:hover{background:#6d28d9}
+    #diag-panel{background:#1a1a2e;border:1px solid #4c1d95;border-radius:10px;padding:16px;margin-bottom:18px;display:none}
+    #diag-panel h3{color:#a78bfa;font-size:13px;margin-bottom:12px}
+    .diag-step{margin-bottom:10px;padding:10px 12px;border-radius:6px;font-size:12px;font-family:monospace}
+    .diag-ok   {background:#052e16;color:#6ee7b7;border-left:3px solid #10b981}
+    .diag-err  {background:#450a0a;color:#fca5a5;border-left:3px solid #ef4444}
+    .diag-info {background:#0c1a2e;color:#93c5fd;border-left:3px solid #3b82f6}
+    .diag-warn {background:#2d1b00;color:#fcd34d;border-left:3px solid #f59e0b}
+    .diag-json {background:#0f172a;color:#94a3b8;padding:8px;border-radius:4px;margin-top:6px;max-height:200px;overflow:auto;white-space:pre-wrap;font-size:11px}
     .section-banner{background:linear-gradient(135deg,#0d2137 0%,#1a3a5c 100%);border-radius:10px;padding:20px 26px;margin-bottom:18px;color:#fff}
     .section-banner h2{font-size:19px;font-weight:700;margin-bottom:3px}
     .section-banner p{font-size:12px;color:#90aecb}
@@ -161,7 +171,14 @@
     <input type="date" id="dateTo"   class="fi"/>
     <button class="btn-primary" id="btnLoad" onclick="loadAll()">🔄 Carregar Dados</button>
     <button class="btn-sec" onclick="exportCSV()">⬇ Exportar CSV</button>
+    <button class="btn-diag" onclick="runDiagnostic()">🔬 Diagnóstico API</button>
     <span id="load-status" style="font-size:12px;color:#718096"></span>
+  </div>
+
+  <!-- DIAGNOSTIC PANEL -->
+  <div id="diag-panel">
+    <h3>🔬 Resultado do Diagnóstico de API</h3>
+    <div id="diag-steps"></div>
   </div>
 
   <!-- ═══ CONSOLIDADO ═══ -->
@@ -873,6 +890,162 @@ async function loadAll(){
     now.toLocaleDateString('pt-BR')+', '+now.toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
   st.textContent=Object.keys(allData).length+'/3 empresas carregadas';
   btn.disabled=false; btn.textContent='🔄 Atualizar';
+}
+
+// ── Diagnostic ──
+async function runDiagnostic(){
+  const panel = document.getElementById('diag-panel');
+  const steps = document.getElementById('diag-steps');
+  panel.style.display = 'block';
+  steps.innerHTML = '';
+  panel.scrollIntoView({behavior:'smooth'});
+
+  function log(type, title, detail, json){
+    const icons = {ok:'✅',err:'❌',info:'ℹ️',warn:'⚠️'};
+    steps.innerHTML += `<div class="diag-step diag-${type}">
+      <strong>${icons[type]} ${title}</strong>
+      ${detail ? `<div style="margin-top:4px;opacity:.85">${detail}</div>` : ''}
+      ${json  ? `<div class="diag-json">${JSON.stringify(json,null,2).slice(0,1200)}</div>` : ''}
+    </div>`;
+  }
+
+  log('info','Iniciando diagnóstico...','Testando Instituto primeiro (menor base)');
+
+  const c = COMPANIES.instituto;
+
+  // Step 1: Network connectivity
+  log('info','Testando conectividade com app.omie.com.br','Chamada mínima sem filtros de data');
+  try {
+    const body = {
+      call: 'ListarContasReceber',
+      app_key: c.key,
+      app_secret: c.secret,
+      param: [{ pagina:1, registros_por_pagina:5 }]
+    };
+    const resp = await fetch('https://app.omie.com.br/api/v1/financas/contareceber/', {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify(body)
+    });
+
+    if(!resp.ok){
+      log('err',`HTTP ${resp.status}`,`Servidor respondeu com erro ${resp.status}`);
+      return;
+    }
+
+    const data = await resp.json();
+    log('ok',`Conexão OK — HTTP 200`,`Chaves na resposta: ${Object.keys(data).join(', ')}`);
+
+    if(data.faultstring){
+      log('err','API retornou erro',data.faultstring, data);
+      return;
+    }
+
+    // Show total records
+    const total = data.total_de_registros ?? data.total_registros ?? '?';
+    log(total>0?'ok':'warn',
+      `Total de registros (sem filtro de data): ${total}`,
+      total===0?'A empresa não possui registros em Contas a Receber.':
+                `Há ${total} registros disponíveis.`
+    );
+
+    // Show first record structure
+    const listKey = Object.keys(data).find(k=>Array.isArray(data[k]));
+    if(listKey && data[listKey].length>0){
+      log('ok',`Chave da lista: "${listKey}"`,
+        `Estrutura do primeiro registro:`, data[listKey][0]);
+    } else {
+      log('warn','Lista vazia ou chave não encontrada',
+        `Chaves presentes: ${Object.keys(data).join(', ')}`, data);
+      return;
+    }
+
+    // Step 2: test with date filter for 2026
+    log('info','Testando com filtro de data 2026','filtrar_por_data_de: 01/01/2026, filtrar_por_data_ate: 31/12/2026');
+    const body2 = {
+      call:'ListarContasReceber', app_key:c.key, app_secret:c.secret,
+      param:[{ pagina:1, registros_por_pagina:5,
+               filtrar_por_data_de:'01/01/2026', filtrar_por_data_ate:'31/12/2026' }]
+    };
+    const resp2 = await fetch('https://app.omie.com.br/api/v1/financas/contareceber/',
+      {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(body2)});
+    const data2 = await resp2.json();
+    const total2 = data2.total_de_registros ?? data2.total_registros ?? 0;
+    log(total2>0?'ok':'warn',
+      `Com filtro 2026: ${total2} registros`,
+      total2===0?'Nenhum registro com vencimento em 2026. Tente outro período.':'');
+
+    // Step 3: test with filtrar_por_tipo_data
+    log('info','Testando COM filtrar_por_tipo_data: V','Verifica se esse parâmetro causa problemas');
+    const body3 = {
+      call:'ListarContasReceber', app_key:c.key, app_secret:c.secret,
+      param:[{ pagina:1, registros_por_pagina:5,
+               filtrar_por_data_de:'01/01/2026', filtrar_por_data_ate:'31/12/2026',
+               filtrar_por_tipo_data:'V' }]
+    };
+    const resp3 = await fetch('https://app.omie.com.br/api/v1/financas/contareceber/',
+      {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(body3)});
+    const data3 = await resp3.json();
+    if(data3.faultstring){
+      log('err','filtrar_por_tipo_data: V causou erro',data3.faultstring);
+    } else {
+      const total3 = data3.total_de_registros ?? data3.total_registros ?? 0;
+      log(total3>0?'ok':'warn',`Com tipo_data=V: ${total3} registros`,'');
+    }
+
+    // Step 4: test contapagar
+    log('info','Testando Contas a Pagar','Chamada sem filtros');
+    const body4 = {
+      call:'ListarContasPagar', app_key:c.key, app_secret:c.secret,
+      param:[{pagina:1, registros_por_pagina:5}]
+    };
+    const resp4 = await fetch('https://app.omie.com.br/api/v1/financas/contapagar/',
+      {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(body4)});
+    const data4 = await resp4.json();
+    if(data4.faultstring){
+      log('err','Contas a Pagar — erro',data4.faultstring, data4);
+    } else {
+      const total4 = data4.total_de_registros ?? data4.total_registros ?? 0;
+      const listKey4 = Object.keys(data4).find(k=>Array.isArray(data4[k]));
+      log(total4>0?'ok':'warn',`Contas a Pagar sem filtro: ${total4} registros`,
+        `Chave da lista: "${listKey4}"`, total4>0 ? data4[listKey4][0] : null);
+    }
+
+    // Step 5: saldo banco
+    log('info','Testando Contas Correntes (saldo banco)','');
+    try {
+      const body5 = {
+        call:'ListarContasCorrentes', app_key:c.key, app_secret:c.secret,
+        param:[{pagina:1, registros_por_pagina:10, apenas_importado_api:'N'}]
+      };
+      const resp5 = await fetch('https://app.omie.com.br/api/v1/geral/contacorrente/',
+        {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(body5)});
+      const data5 = await resp5.json();
+      if(data5.faultstring){
+        log('warn','Contas Correntes — erro',data5.faultstring);
+      } else {
+        const listKey5 = Object.keys(data5).find(k=>Array.isArray(data5[k]));
+        const contas = listKey5 ? data5[listKey5] : [];
+        log('ok',`Contas correntes: ${contas.length} conta(s)`,
+          contas.length ? `Estrutura do saldo:` : 'Nenhuma conta encontrada',
+          contas.length ? contas[0] : null);
+      }
+    } catch(e){ log('warn','Contas Correntes falhou',e.message); }
+
+    log('ok','Diagnóstico concluído',
+      'Com base nos resultados acima, ajuste os parâmetros de filtro ou período.');
+
+  } catch(e){
+    if(e.message.includes('Failed to fetch') || e.message.includes('NetworkError') || e.message.includes('CORS')){
+      log('err','ERRO DE CORS / REDE',
+        `A requisição foi bloqueada pelo navegador.\n` +
+        `Causa provável: o arquivo está sendo aberto como file:// ou de um domínio que a Omie não permite.\n` +
+        `Solução: hospede o arquivo em um servidor HTTP local (ex: npx serve .) ou use um backend proxy.\n\nErro: ${e.message}`
+      );
+    } else {
+      log('err','Erro inesperado', e.message);
+    }
+  }
 }
 
 // ── Init ──
